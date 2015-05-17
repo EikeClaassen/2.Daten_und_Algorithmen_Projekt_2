@@ -1,3 +1,4 @@
+function GUIstart()
 
             hfig = figure('Name','Wellen-Maschine','NumberTitle','off',...
               'Position',[100 100 1024 640],...
@@ -92,24 +93,31 @@
 %                              'hAnimation',hAnimation,'hSinus',hSinus,...
 %                              'hSinus1Check',hSinus1Check,'hSinus1FrequenzText',hSinus1FrequenzText,...
 %                              'hSinus1FrequenzEdit',hSinus1FrequenzEdit,'hSinus1AmplitudeText',hSinus1AmplitudeText,...
-%                              'hSinus1Amplitude',hSinus1Amplitude,'hSinus2Check',hSinus2Check,...
+%                              'hSinus1AmplitudeEdit',hSinus1AmplitudeEdit,'hSinus2Check',hSinus2Check,...
 %                              'hSinus2FrequenzText',hSinus2FrequenzText,'hSinus2FrequenzEdit',hSinus2FrequenzEdit,...
-%                              'hSinus2AmplitudeText',hSinus2AmplitudeText,'hSinus2Amplitude',hSinus2Amplitude,...
+%                              'hSinus2AmplitudeText',hSinus2AmplitudeText,'hSinus2AmplitudeEdit',hSinus2AmplitudeEdit,...
 %                              'hSinus3Check',hSinus3Check,'hSinus3FrequenzText',hSinus3FrequenzText,...
 %                              'hSinus3FrequenzEdit',hSinus3FrequenzEdit,'hSinus3AmplitudeText',hSinus3AmplitudeText,...
-%                              'hSinus3Amplitude',hSinus3Amplitude,'hSinus4Check',hSinus4Check,...
+%                              'hSinus3AmplitudeEdit',hSinus3AmplitudeEdit,'hSinus4Check',hSinus4Check,...
 %                              'hSinus4FrequenzText',hSinus4FrequenzText,'hSinus4FrequenzEdit',hSinus4FrequenzEdit,...
-%                              'hSinus4AmplitudeText',hSinus4AmplitudeText,'hSinus4Amplitude',hSinus4Amplitude);
+%                              'hSinus4AmplitudeText',hSinus4AmplitudeText,'hSinus4AmplitudeEdit',hSinus4AmplitudeEdit);
 
-%         
-%             hSinus1 = subplot(4,1,1,'Parent',hSinus);
-%             grid on
-%             set(hSinus1,'Visible','on','Units','pixels','Position',[25 440 180 80],'ylim',[-1 1]);
+            hSinus1 = subplot(4,1,1,'Parent',hSinus);
+            grid on
+            set(hSinus1,'Visible','on','Units','pixels','Position',[25 440 180 80],'ylim',[-1 1]);
+
+
+            function hsinus1_plot(handles,event)
+                hSinus1 = subplot(4,1,1,'Parent',hSinus);
+                plot(sin(randn(2)),randn(2));
+                set(hSinus1,'Visible','on','Units','pixels','Position',[25 440 180 80],'ylim',[-1 1],'xlim',[0 2*pi]);
+                grid on
+            end
 
 
             hSinus2 = subplot(4,1,2,'Parent',hSinus);
             grid on
-            set(hSinus2,'Visible','on','Units','pixels','Position',[25 330 180 80],'ylim',[-1 1])
+            set(hSinus2,'Visible','on','Units','pixels','Position',[25 330 180 80],'ylim',[-1 1],'xlim',[0 2*pi]);
 
 
             hSinus3 = subplot(4,1,3,'Parent',hSinus);
@@ -145,5 +153,5 @@
 % hplot2 = plot(x,sin(x),x,0.*x);
 % axis tight;
 % set(gca,'Units','pixels','Position',[30 200 200 100]);
-
+end
 
