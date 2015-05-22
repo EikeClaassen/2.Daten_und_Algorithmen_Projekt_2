@@ -64,6 +64,11 @@ classdef SourceOfSound < handle
         function setPhase(obj, phase)
             obj.Phase = phase;
         end
+        
+        function colorMap = getColorMap(obj, t)
+            colorMap = obj.AmplitudesMatrix.*cos(2*pi*obj.AngularFrequency*t-obj.RadiiMatrix+obj.Phase);
+            x = colorMap(4,6)
+        end
     end
     
 end

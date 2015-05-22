@@ -5,7 +5,7 @@ classdef WaveGUI < handle
     properties 
         Handles;
         Timer;
-        S1;
+        Speaker1;
     end
     
     
@@ -14,7 +14,7 @@ classdef WaveGUI < handle
             obj.Timer = timer('Period',0.5,...
                               'TimerFcn',@(h,d)obj.runAnimation,...
                               'ExecutionMode','FixedRate');
-            obj.S1 = SourceOfSound();
+            obj.Speaker1 = SourceOfSound();
             obj.openGUI();
         end
         
@@ -25,7 +25,8 @@ classdef WaveGUI < handle
                           'Position',[100 100 1024 576],... 
                           'ToolBar','none',...
                           'MenuBar','none',...
-                          'Resize','off'); 
+                          'Resize','off',...
+                          'CloseRequestFcn',@(hObject,data)obj.closeGUI); 
            
             hStart = uicontrol('String','Start',...
                                'Style','Pushbutton',... 
@@ -44,9 +45,9 @@ classdef WaveGUI < handle
                              
             hAnimationAxes = axes('Parent',hAnimation,...
                                   'Units','pixels',...
-                                  'Position',[0 0 1000 600],...
+                                  'Position',[-10 -10 1000 600],...
                                   'XTick',[],'YTick',[],...
-                                  'ButtonDownFcn',@(handle,event)obj.setSourceOfSound);
+                                  'ButtonDownFcn',@obj.setSourceOfSound);
                               
             hSourceOfSound1Tick = uicontrol('Style','checkbox',...
                                             'Position',[250 530 15 15],...
@@ -212,8 +213,12 @@ classdef WaveGUI < handle
                                 'Position',[440 52.5 100 25],...
                                 'String',{'Luft','Wasser','Stahl'},...
                                 'FontSize',13);
+                            
+            hImage = image('Parent',hAnimationAxes,...
+                           'CData',obj.Speaker1.Function,...
+                           'CDataMapping','scaled');
                         
-            obj.Handles = struct('hfgi',hfig,...
+            obj.Handles = struct('hfig',hfig,...
                                  'hStart',hStart,...
                                  'hStop',hStop,...
                                  'hAnimation',hAnimation,...
@@ -226,6 +231,7 @@ classdef WaveGUI < handle
                                  'hSourceOfSound3',hSourceOfSound3,...
                                  'hMedium',hMedium,...
                                  'hMediumText',hMediumText,...
+                                 'hImage',hImage,...
                                  'hSinus1FrequenzText',hSinus1FrequenzText,...
                                  'hSinus1Frequenz',hSinus1Frequenz,...
                                  'hSinus1AmplitudeText',hSinus1AmplitudeText,...
@@ -256,11 +262,14 @@ classdef WaveGUI < handle
         function closeGUI(obj)
             obj.stopAnimation;
             delete(obj.Timer);
+            closereq;
         end
         
         
         function startAnimation(obj)
+            if strcmp(obj.Timer.Running,'off')
             start(obj.Timer);
+            end
         end
         
         
@@ -270,7 +279,8 @@ classdef WaveGUI < handle
         
         
         function runAnimation(obj)
-            image('parent',obj.Handles.hAnimationAxes,'CData',obj.S1.Function,'CDataMapping','scaled');
+            set(obj.Handles.hImage,'CData',obj.Speaker1.getColorMap(obj.Timer.TasksExecuted));
+            %image('parent',obj.Handles.hAnimationAxes,'CData',obj.S1.Function,'CDataMapping','scaled');
         end
         
         function setSourceOfSound1Tick(obj)
@@ -315,15 +325,13 @@ classdef WaveGUI < handle
             end
         end
         
-        function setSourceOfSound(obj)
-            xdata[] = obj.HandlesSourceOfSound.XTick;
-            ydata = get(hplot, 'ydata');
-            xdata = [xdata event.IntersectionPoint(1)];
-            ydata = [ydata event.IntersectionPoint(2)];
-            set(hplot, 'xdata', xdata);
-            set(hplot, 'ydata', ydata);
+        function setSourceOfSound(obj,handle,event)
+            hold on
+            XCoordinate = event.IntersectionPoint(1);
+            YCoordinate = event.IntersectionPoint(2);
+            plot(XCoordinate,YCoordinate,'o')
+            hold off
         end
-        
     end
     
 end
