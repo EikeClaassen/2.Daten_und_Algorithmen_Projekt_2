@@ -21,18 +21,18 @@ classdef SourceOfSound < handle
     
     methods
         function obj = SourceOfSound
-            [X,Y] = meshgrid(-8*pi:pi/10:8*pi);
+            [X,Y] = meshgrid(-8*pi:pi/28:8*pi);
             obj.RadiiMatrix = sqrt((X-obj.Position(1)).^2 + (Y-obj.Position(2)).^2);
             obj.setSpeedOfSound('air');
             obj.setAmplitude(1);
-            obj.setFrequency(1);
-            obj.Function = obj.AmplitudesMatrix.*cos(2*pi*obj.AngularFrequency*8-obj.WaveVector.*obj.RadiiMatrix+obj.Phase);
+            obj.setFrequency(0.1);
+            obj.Function = obj.AmplitudesMatrix.*cos(obj.AngularFrequency*8-obj.WaveVector.*obj.RadiiMatrix+obj.Phase);
         end
         
         
         function setPosition(obj, position)
             obj.Position = position;
-            [X,Y] = meshgrid(-8*pi:pi/10:8*pi);
+            [X,Y] = meshgrid(-8*pi:pi/28:8*pi);
             obj.RadiiMatrix = sqrt((X-obj.Position(1)).^2 + (Y-obj.Position(2)).^2);
         end
         
@@ -66,8 +66,8 @@ classdef SourceOfSound < handle
         end
         
         function colorMap = getColorMap(obj, t)
-            colorMap = obj.AmplitudesMatrix.*cos(2*pi*obj.AngularFrequency*t-obj.RadiiMatrix+obj.Phase);
-            x = colorMap(4,6)
+            obj.AmplitudesMatrix;
+            colorMap = obj.AmplitudesMatrix.*cos(obj.AngularFrequency*t-5*obj.RadiiMatrix+obj.Phase);
         end
     end
     
