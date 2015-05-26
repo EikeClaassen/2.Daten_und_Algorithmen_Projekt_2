@@ -15,6 +15,7 @@ classdef WaveGUI < handle
                               'TimerFcn',@(h,d)obj.runAnimation,...
                               'ExecutionMode','FixedRate');
             obj.S1 = SourceOfSound();
+            obj.openGUI;
         end
         
         
