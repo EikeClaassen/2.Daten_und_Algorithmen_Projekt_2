@@ -43,6 +43,8 @@ classdef SourceOfSound < handle
                     obj.SpeedOfSound = 343;
                 case 'water'
                     obj.SpeedOfSound = 1484;
+                case'steel'
+                    obj.SpeedOfSound = 5920;
             end
             obj.WaveVector = obj.AngularFrequency/obj.SpeedOfSound;
         end
