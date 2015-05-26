@@ -22,9 +22,10 @@ classdef SourceOfSound < handle
             obj.ZeroMatrix = zeros(449);
             obj.setPosition([0 0]);
             obj.setSpeedOfSound('air');
-            obj.setAmplitude(1);
-            obj.setFrequency(0.1);
+            obj.setAmplitude(5);
+            obj.setFrequency(0.2);
             obj.setPhase(0);
+            obj.setDamping(0)
         end
         
         
@@ -66,8 +67,12 @@ classdef SourceOfSound < handle
             obj.Phase = phase;
         end
         
+        function setDamping(obj,damping)
+            obj.Damping = damping;
+        end
+        
         function colorMap = getColorMap(obj, t)
-            colorMap = obj.AmplitudesMatrix.*cos(obj.AngularFrequency*t-5*obj.RadiiMatrix+obj.Phase);
+            colorMap = exp(-obj.Damping*t).*obj.AmplitudesMatrix.*cos(obj.AngularFrequency*t-5*obj.RadiiMatrix+obj.Phase);
         end
     end
     
