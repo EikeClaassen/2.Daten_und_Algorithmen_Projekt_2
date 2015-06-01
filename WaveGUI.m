@@ -85,7 +85,7 @@ classdef WaveGUI < handle
                                'Position',[540 30 100 30],...
                                'Callback',@(hObject,data)obj.startAnimation); 
  
-            hStop = uicontrol('String','Stop',...
+            hStop = uicontrol('String','Freeze',...
                               'Style','Pushbutton',... 
                               'Position',[660 30 100 30],...
                               'Callback',@(hObject,data)obj.stopAnimation);
@@ -425,8 +425,12 @@ classdef WaveGUI < handle
             obj.Speaker2 = SourceOfSound();
             obj.Speaker3 = SourceOfSound();
             obj.Handles.hRadioButtonGroup.Visible = 'on';
+%             obj.Handles.hStop.String = 'Stop';
             if strcmp(obj.Timer.Running,'off')
             start(obj.Timer);
+            end
+            if strcmp(obj.Timer.Running,'on')
+            obj.Handles.hStop.String = 'Freeze';
             end
         end
         
@@ -434,7 +438,11 @@ classdef WaveGUI < handle
         function stopAnimation(obj)
             obj.Handles.hRadioButtonGroup.Visible = 'off';
             stop(obj.Timer);
-            set(obj.Handles.hImage,'CData',zeros(449));
+            obj.Handles.hStart.String = 'Resume';
+            if strcmp(obj.Timer.Running,'off')
+                obj.Handles.hStop.String = 'Stop';
+            end
+            %set(obj.Handles.hImage,'CData',zeros(449));
         end
         
         function setQuality(obj)
