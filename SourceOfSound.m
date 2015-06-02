@@ -19,8 +19,13 @@ classdef SourceOfSound < handle
     
     methods
         function obj = SourceOfSound
+
+            [X,Y] = meshgrid(-8*pi:pi/10:8*pi);  %genauigkeit
+            obj.RadiiMatrix = sqrt((X-obj.Position(1)).^2 + (Y-obj.Position(2)).^2);
+
             obj.ZeroMatrix = zeros(449);
             obj.setPosition([0 0]);
+
             obj.setSpeedOfSound('air');
             obj.setAmplitude(5);
             obj.setFrequency(0.2);
@@ -31,7 +36,11 @@ classdef SourceOfSound < handle
         
         function setPosition(obj, position)
             obj.Position = position;
+
+            [X,Y] = meshgrid(-8*pi:pi/20:8*pi);
+
             [X,Y] = meshgrid(-10*pi:pi/28:10*pi);
+
             obj.RadiiMatrix = sqrt((X-obj.Position(1)).^2 + (Y-obj.Position(2)).^2);
             obj.setAmplitude(obj.Amplitude);
         end
