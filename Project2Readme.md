@@ -12,7 +12,7 @@
 ** Table of contents **
 1. Describtion of the project
 2. Directories ???
-3. Examples
+3. Examples and software handling
 4. Dependencies
 5. Installation instructions
 6. Authors
@@ -22,7 +22,7 @@
 
 This program simulates a wave field using MathWorks Matlab. The user can place up to three sources in the field. The sources can emit sine- or cosinewaves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the User is able to stop, continue or cancel the simulation.
 
-When the Program is executed first a window for the quality setting and some basic program presets opens. Due to the problem not every computer has the resurces for a    
+When the Program is executed first a window for the quality setting and some basic program presets opens. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time of the simulation.
 
 
 <!---Dieses Programm verwaltet die gegebene MIT/TIMIT-Datenbank. Die MIT/TIMIT-Datenbank besteht aus englischsprachigen Sätzen. Sie werden von 16 verschiedenen Sprechern unterschiedlichen Geschlechts dargeboten. Zu jedem Sprecher liegen 10 verschiedene Sätze vor. Einige Sätze kommen mehrfach vor. Zur weiteren Unterscheidung der Sätze sind Kriterien wie das Satzkürzel (SentenceID), das Kürzel des Sprechers (Name), sein Geschlecht (Gender),
@@ -33,16 +33,25 @@ Dieses Programm bietet eine Suchfunktion. Der Nutzer kann nach einzelnen Kriteri
 Zur grafischen Auswertung der Files verfügt dieses Programm über eine STFT (Short Time Fourier Transform) Funktion.
 --->
 
-##2. Was liegt wo
+##2. Directories
 
+The Simulation consitst of two m.files.
+**SourceOfSound.m** features the functions that describe the Sound Sources wich were placed in the field.
+**WaveGUI.m** builds the graphical user interface.
+
+
+<!--
 Im Ordner *MFiles_TIMIT_MIT* liegen die Programmdateien und alle verwendeten Matlab Funktionen und Klassen.
 
 Im Ordner *TIMIT MIT* ist die Datenbank hinterlegt.
+-->
+
+##3. Examples and software handling
+
+###Software handling
 
 
-##3. Benutzung und Beispiele
-
-###Handhabung
+<!--
 Die Datenbank bietet folgende Suchparameter:
 * Kürzel des Sprechers
 * Geschlecht des Sprechers
@@ -70,8 +79,10 @@ Mittels des **"CWresults"** Buttons kann der Anwender die gefundenen Ergebnisse 
 3. **Beispiel Words**:
 Bei der Suche nach dem Wort "I" werden nur Ergebnisse angezeigt, die das Wort "I" enthalten. Wörter die unter anderem ein "i" beinhalten werden nicht angezeigt.
 
+-->
 
 ##4. Dependencies
+<!--
 Dieses Programm wurde erstellt und getest mit MathWorks Matlab in den Versionen:
 * Matlab 2014b
 * Matlab 2015a
@@ -84,8 +95,22 @@ Das Programm umfasst folgende notwendige Files:
 * Windowing.m (Function)
 * TMIT_MIT_Database.m (Class)
 * TMIT_MIT_DatabaseTest.m (Script)
+-->
 
-##5. Installationshinweise
+##5. Installation instructions
+
+This programm requires the installation of MathWorks Matlab **2014b** or **2015a**.
+
+Installation procedure
+
+1. Installing Matlab
+2. All necessary Matlab datas (see chapter 4) should be located in one folder.
+3. Set the path of the folder in Matlab
+4. Execute the File WaveGUI.m
+
+
+
+<!--
 Dieses Programm setzt die Installation von MathWorks Matlab **2014b** oder **2015a** voraus.
 
 Installationsreihenfolge
@@ -99,11 +124,11 @@ Installationsreihenfolge
 Informationen zum Umgang mit dem Programm finden sich im Kapitel **3. Benutzungsbeispiele**
 
 Jede Klasse verfügt über einen Hilfe-Text. Handles im GUI besitzen Tool-Tipp Fenster.
+-->
 
+##6. Authors
 
-##6. Autoren
-
-Dieses Programm wurde erstellt von:
+This  programm was developt by:
 
     Sascha Bilert         6009917
     Eike Claaßen          6010410
@@ -115,12 +140,20 @@ Dieses Programm wurde erstellt von:
 
 Copyright (c) 2015 Sascha Bilert, Eike Claaßen, Jan-Michel Grüttgen
 
-Hiermit wird unentgeltlich jeder Person, die eine Kopie der Software und der zugehörigen Dokumentationen (die "Software") erhält,
-die Erlaubnis erteilt, sie uneingeschränkt zu benutzen, inklusive und ohne Ausnahme dem Recht, sie zu verwenden, kopieren, ändern,
-fusionieren, verlegen, verbreiten, unterlizenzieren und/oder zu verkaufen, und Personen, die diese Software erhalten, diese Rechte
-zu geben, unter den folgenden Bedingungen:
-Der obige Urheberrechtsvermerk und dieser Erlaubnisvermerk sind in allen Kopien oder Teilkopien der Software beizulegen.
-DIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTELLT, EINSCHLIESSLICH DER GARANTIE ZUR BENUTZUNG FÜR
-DEN VORGESEHENEN ODER EINEM BESTIMMTEN ZWECK SOWIE JEGLICHER RECHTSVERLETZUNG, JEDOCH NICHT DARAUF BESCHRÄNKT. IN KEINEM FALL SIND
-DIE AUTOREN ODER COPYRIGHTINHABER FÜR JEGLICHEN SCHADEN ODER SONSTIGE ANSPRÜCHE HAFTBAR ZU MACHEN, OB INFOLGE DER ERFÜLLUNG EINES
-VERTRAGES, EINES DELIKTES ODER ANDERS IM ZUSAMMENHANG MIT DER SOFTWARE ODER SONSTIGER VERWENDUNG DER SOFTWARE ENTSTANDEN.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
