@@ -50,6 +50,10 @@ Im Ordner *TIMIT MIT* ist die Datenbank hinterlegt.
 
 ###Software handling
 
+After executing the WaveGUI.m a first dialog windows opens. In this window the user has to choose primarily the quality settings for the simulation. Older mobile devices (>3-4 Years) especially those with dedicated graphic solutions should choose the lower quality settings. Modern devices and most stationary computers can handle the higher quality setting.  
+Additional to this the dialog window allows to make other minor setting which can also be changed later in der main window.
+Now the main window can be started by clicking on the **Sart GUI** button. 
+
 
 <!--
 Die Datenbank bietet folgende Suchparameter:
@@ -82,6 +86,14 @@ Bei der Suche nach dem Wort "I" werden nur Ergebnisse angezeigt, die das Wort "I
 -->
 
 ##4. Dependencies
+This program was developed and tested using MathWorks Matlab in the versions:
+* Matlab 2014b
+* Matlab 2015a
+
+The program consists of the following essential files:
+* SourceOfSound.m (Class)
+* WaveGUI (Script)
+
 <!--
 Dieses Programm wurde erstellt und getest mit MathWorks Matlab in den Versionen:
 * Matlab 2014b
@@ -106,7 +118,7 @@ Installation procedure
 1. Installing Matlab
 2. All necessary Matlab datas (see chapter 4) should be located in one folder.
 3. Set the path of the folder in Matlab
-4. Execute the File WaveGUI.m
+4. Execute the File **WaveGUI.m**
 
 
 
