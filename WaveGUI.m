@@ -14,19 +14,14 @@ classdef WaveGUI < handle
     
     methods
         function obj = WaveGUI
-            obj.Timer = timer('Period',0.1,...
+            obj.Timer = timer('Period',0.06,...
                               'TimerFcn',@(h,d)obj.runAnimation,...
                               'ExecutionMode','FixedRate');
 
-%             obj.Speaker1 = SourceOfSound();
-%             obj.Speaker1.setPosition([0 0]);
-%             obj.Speaker1.setPhase(pi);
-%             obj.Speaker2 = SourceOfSound();
-%             obj.Speaker2.setPosition([10 10]);
-%             obj.Speaker3 = SourceOfSound();
-%             obj.Speaker3.setPosition([-10 10]);
+            obj.Speaker1 = SourceOfSound();
+            obj.Speaker2 = SourceOfSound();
+            obj.Speaker3 = SourceOfSound();
             obj.openSettings();
-%             obj.openGUI();
             
         end
         
@@ -39,36 +34,62 @@ classdef WaveGUI < handle
                                'Resize','off',...
                                'Position',[100 100 200 300]);
                            
-            hQualityText = uicontrol('Style','Text',...
+            hQualityText = uicontrol(hSettings,'Style','Text',...
                                      'String','Select Quality',...
                                      'Position',[10 250 80 20]);
                                  
-            hQuality = uicontrol('Style','popupmenu',...
+            hQuality = uicontrol(hSettings,'Style','popupmenu',...
                                  'String',{'High','Low'},...
-                                 'Position',[10 220 80 25]);
+                                 'Position',[15 220 80 30]);
                              
-            hInitializeGUI = uicontrol('Style','pushbutton',...
+            hReadMeFigure = figure('Name','README',...
+                                   'NumberTitle','off',...
+                                   'Visible','off',...
+                                   'Toolbar','none',...
+                                   'MenuBar','none',...
+                                   'Resize','off',...
+                                   'Position',[100 100 500 500]);
+                               
+            hReadMeText = uicontrol(hReadMeFigure,'Style','text',...
+                                    'String',{},...
+                                    'Position',[200 200 100 100]);
+                             
+            hReadme = uicontrol(hSettings,'Style','pushbutton',...
+                                'String','README',...
+                                'Position',[15 100 80 20],...
+                                'Callback',@(handles,event)obj.setReadme);
+                             
+            hInitializeGUI = uicontrol(hSettings,'Style','pushbutton',...
                                        'String','Start GUI',...
-                                       'Position',[130 10 60 20],...
+                                       'Position',[120 10 70 25],...
                                        'Callback',@(handles,event)obj.setStart);
                            
             obj.HandlesSettings = struct('hSettings',hSettings,...
                                          'hQualityText',hQualityText,...
                                          'hQuality',hQuality,...
+                                         'hReadMeFigure',hReadMeFigure,...
+                                         'hReadMeText',hReadMeText,...
+                                         'hReadme',hReadme,...
                                          'hInitializeGUI',hInitializeGUI);
         
         end
         
         function setStart(obj)
-                if(strcmp(obj.HandlesSettings.hQuality.String,'High'))
-                    set(obj.Timer,'Period',0.06);
-%                     obj.Timer.Period = 0.06
-                elseif(strcmp(obj.HandlesSettings.hQuality.String,'Low'))
-                    set(obj.Timer,'Period',0.1);
-%                     obj.Timer.Period = 0.1
+                quality = obj.HandlesSettings.hQuality.String(obj.HandlesSettings.hQuality.Value);
+                if(strcmp(quality,'High'))
+                    obj.Timer.Period = 0.06;
+                elseif(strcmp(quality,'Low'))
+                    obj.Timer.Period = 0.1;
                 end
                 closereq;
                 obj.openGUI();
+        end
+        
+        function setReadme(obj)
+            txt = fopen('test.txt');
+            readme = textscan(txt,'%s');
+            obj.HandlesSettings.hReadMeFigure.Visible = 'on';
+            obj.HandlesSettings.hReadMeTex.String = readme;
         end
         
         function openGUI(obj) 
@@ -82,12 +103,12 @@ classdef WaveGUI < handle
            
             hStart = uicontrol('String','Start',...
                                'Style','Pushbutton',... 
-                               'Position',[540 30 100 30],...
+                               'Position',[510 30 100 30],...
                                'Callback',@(hObject,data)obj.startAnimation); 
  
             hStop = uicontrol('String','Freeze',...
                               'Style','Pushbutton',... 
-                              'Position',[660 30 100 30],...
+                              'Position',[620 30 100 30],...
                               'Callback',@(hObject,data)obj.stopAnimation);
                           
 %                  hQuality = uicontrol('Style','popupmenu',...
@@ -110,20 +131,27 @@ classdef WaveGUI < handle
                                        'Style','Radiobutton',...
                                        'String','Speaker 1',...
                                        'HorizontalAlignment','right',...
-                                       'Position',[30 20 20 20],...
+                                       'Position',[5 25 100 20],...
                                        'Callback',@(handles,event)obj.setSourceOfSound1Tick);
+                                   
                                    
             hRadioControl2 = uicontrol('Parent',hRadioButtonGroup,...
                                        'Style','Radiobutton',...
                                        'String','Speaker 2',...
-                                       'Position',[110 20 20 20],...
+                                       'Position',[82.5 25 100 20],...
                                        'Callback',@(handles,event)obj.setSourceOfSound2Tick);
                                    
             hRadioControl3 = uicontrol('Parent',hRadioButtonGroup,...
                                        'Style','Radiobutton',...
                                        'String','Speaker 3',...
-                                       'Position',[180 20 20 20],...
+                                       'Position',[162.5 25 100 20],...
                                        'Callback',@(handles,event)obj.setSourceOfSound3Tick);
+                                   
+            hRadioControlPlot = uicontrol('Parent',hRadioButtonGroup,...
+                                          'Style','Radiobutton',....
+                                          'String','Select a Point',...
+                                          'Position',[5 5 200 20],...
+                                          'Callback',@(handles,event)obj.setLineplot);
  
 %             hAnimation = uipanel('Visible','on',...
 %                                  'BackgroundColor','w',... 
@@ -371,6 +399,7 @@ classdef WaveGUI < handle
                                  'hStop',hStop,...
                                  ...'hQuality',hQuality,...
                                  ...'hRadioControl',hRadioControl,...
+                                 'hRadioControlPlot',hRadioControlPlot,...
                                  'hRadioControl1',hRadioControl1,...
                                  'hRadioControl2',hRadioControl2,...
                                  'hRadioControl3',hRadioControl3,...
@@ -421,13 +450,10 @@ classdef WaveGUI < handle
         
         
         function startAnimation(obj)
-            obj.Speaker1 = SourceOfSound();
-            obj.Speaker2 = SourceOfSound();
-            obj.Speaker3 = SourceOfSound();
             obj.Handles.hRadioButtonGroup.Visible = 'on';
-%             obj.Handles.hStop.String = 'Stop';
             if strcmp(obj.Timer.Running,'off')
             start(obj.Timer);
+            setSourceOfSound1Tick(obj);
             end
             if strcmp(obj.Timer.Running,'on')
             obj.Handles.hStop.String = 'Freeze';
@@ -441,18 +467,19 @@ classdef WaveGUI < handle
             obj.Handles.hStart.String = 'Resume';
             if strcmp(obj.Timer.Running,'off')
                 obj.Handles.hStop.String = 'Stop';
+                obj.Handles.hRadioButtonGroup.Visible = 'on';
             end
-            %set(obj.Handles.hImage,'CData',zeros(449));
+%             set(obj.Handles.hImage,'CData',zeros(449));
         end
         
-        function setQuality(obj)
-            if(strcmp(obj.Handles.hQuality.String,'High'))
-               obj.Timer.Period = 0.06;
-            elseif(strcmp(obj.Handles.hQuality.String,'Low'))
-               obj.Timer.Period = 1;
-            end
-        end
-        
+%         function setQuality(obj)
+%             if(strcmp(obj.Handles.hQuality.String,'High'))
+%                obj.Timer.Period = 0.06;
+%             elseif(strcmp(obj.Handles.hQuality.String,'Low'))
+%                obj.Timer.Period = 1;
+%             end
+%         end
+%         
         function runAnimation(obj)
 %             tic
             obj.Handles.hImage.Visible = 'on';
@@ -464,7 +491,6 @@ classdef WaveGUI < handle
         end
         
         function setSourceOfSound1Tick(obj)
-            if(obj.Handles.hRadioControl1.Value == 1)
                 obj.Handles.hSinus1Frequenz.Enable = 'on';
                 obj.Handles.hSinus1Amplitude.Enable = 'on';
                 obj.Handles.hSinus1Phase.Enable = 'on';
@@ -477,11 +503,9 @@ classdef WaveGUI < handle
                 obj.Handles.hSinus3Amplitude.Enable = 'off';
                 obj.Handles.hSinus3Phase.Enable = 'off';
                 obj.Handles.hSinus3Damping.Enable = 'off'; 
-            end
         end
         
         function setSourceOfSound2Tick(obj)
-            if(obj.Handles.hRadioControl2.Value == 1)
                 obj.Handles.hSinus2Frequenz.Enable = 'on';
                 obj.Handles.hSinus2Amplitude.Enable = 'on';
                 obj.Handles.hSinus2Phase.Enable = 'on';
@@ -494,11 +518,9 @@ classdef WaveGUI < handle
                 obj.Handles.hSinus3Amplitude.Enable = 'off';
                 obj.Handles.hSinus3Phase.Enable = 'off';
                 obj.Handles.hSinus3Damping.Enable = 'off';
-            end
         end
         
         function setSourceOfSound3Tick(obj)
-            if(obj.Handles.hRadioControl3.Value == 1)
                 obj.Handles.hSinus3Frequenz.Enable = 'on';
                 obj.Handles.hSinus3Amplitude.Enable = 'on';
                 obj.Handles.hSinus3Phase.Enable = 'on';
@@ -511,7 +533,6 @@ classdef WaveGUI < handle
                 obj.Handles.hSinus2Amplitude.Enable = 'off';
                 obj.Handles.hSinus2Phase.Enable = 'off';
                 obj.Handles.hSinus2Damping.Enable = 'off'; 
-            end
         end
         
         function setSourceOfSound(obj,~,event)
@@ -530,6 +551,12 @@ classdef WaveGUI < handle
                     Y = event.IntersectionPoint(2);
                     obj.Speaker3.setPosition([X Y]);
             end
+        end
+        
+        function setLineplot(obj)
+        
+        
+        
         end
         
         function changeFrequency1(obj)
