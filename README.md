@@ -1,24 +1,24 @@
 #Wavefield Simulation
 
 ** Table of contents **
-1. Describtion of the project
-2. Directories ???
+1. Description of the project
+2. Directories
 3. Examples and software handling
 4. Dependencies
 5. Installation instructions
 6. Authors
 7. License agreement
 
-##1. Describtion of the project
+##1. Description of the project
 
-This program simulates a wave field using MathWorks Matlab. The user can place up to three sources in the field. The sources can emit sine- or cosinewaves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the User is able to stop, continue or cancel the simulation.Also the quality settings van be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time of the simulation.
+This program simulates a wave field using MathWorks Matlab. The user can place up to three sources in the field. The sources can emit sine- or cosine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the User is able to stop, continue or cancel the simulation.Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time of the simulation.
 
 
 
 ##2. Directories
 
-The Simulation consitst of two m.files.
-**SourceOfSound.m** features the functions that describe the Sound Sources wich were placed in the field.
+The Simulation consists of two m.files.
+**SourceOfSound.m** features the functions that describe the Sound Sources which were placed in the field.
 **WaveGUI.m** builds the graphical user interface.
 
 
@@ -28,13 +28,7 @@ The Simulation consitst of two m.files.
 
 After executing the WaveGUI.m the graphical user interface opens. First the user should check the settings for the quality settings. Users with older mobile devices (>3-4 Years) especially those with dedicated graphic solutions should choose the lower quality settings. Modern devices and most stationary computers can handle the higher quality setting. The quality setting has influence on the refresh time of the animation. With the low quality settings it works at 10Hz and the high setting works with 16.6Hz. The quality settings can be adjusted on-the-fly while the program is running.
 
-The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the illustration stays always reasonable and clear. The slider for the phase features values from 0 to 2 Pi. With the button "Start" the simulation can be started. The different sources can be selected with the Radiobuttions. These buttons also enable the setting parameters on the left side for every specific source.
-
-
-
-
-<!--low setting 10Hz, high setting 16,6Hz-->
-
+The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the illustration stays always reasonable and clear. The slider for the phase features values from 0 to 2 Pi. With the button "Start" the simulation can be started. The different sources can be selected with the radiobuttions. These buttons also enable the setting parameters on the left side for every specific source. With the function "Select a Point" the User can select a random point in the wavefield. The program returns a line plot of the specific area.
 
 
 ##4. Dependencies
