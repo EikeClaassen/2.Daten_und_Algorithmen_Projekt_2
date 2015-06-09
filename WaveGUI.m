@@ -26,7 +26,7 @@ classdef WaveGUI < handle
             
             hfig = figure('Name','Wave-Machine',...
                           'NumberTitle','off',... 
-                          'Position',[100 100 1024 608],... 
+                          'Position',[100 60 1024 608],... 
                           'ToolBar','none',...
                           'MenuBar','none',...
                           'Resize','off',...
@@ -68,6 +68,10 @@ classdef WaveGUI < handle
             hLineplot = uicontrol('Style','checkbox',...
                                   'String','Select a Point',...
                                   'Position',[20 160 150 20],...
+<<<<<<< HEAD
+=======
+                                  'Position',[20 160 100 20],...
+>>>>>>> fa006f01e09cf0188d6048bb83b1cb94bfad4f7a
                                   'FontSize',11,...
                                   'Callback',@(handle,eventdata)obj.setLineplot);
                                  
@@ -216,6 +220,49 @@ classdef WaveGUI < handle
                 sMap = sMap + obj.Speakers{i}.getColorMap(obj.Timer.TasksExecuted);
             end
             set(obj.Handles.hImage,'CData',sMap);
+
+        end
+        
+        function addSpeaker(obj)
+            obj.Speakers{length(obj.Speakers)+1} = SourceOfSound();
+            obj.Speakers{length(obj.Speakers)}.setPosition([(rand(1)-0.5)*10*pi (rand(1)-0.5)*10*pi]);
+            obj.Handles.hStart.Enable = 'on';
+            obj.Handles.hSpeakerList.Enable = 'on';
+            obj.Handles.hRemove.Enable = 'on';
+            obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
+            if length(obj.Speakers)>=5
+                warndlg('We recommend no more Speakers!','Speaker-overflow');
+            end
+        end
+        
+        function removeSpeaker(obj)
+%             obj.Handles.hSpeakerList.Value = [];
+            curidx = obj.Handles.hSpeakerList.Value;
+            curstrings = obj.Handles.hSpeakerList.String;
+            curstrings(curidx) = [];  %delete it in this list
+            obj.Handles.hSpeakerList.Value = curstrings;
+        end
+        
+        function selectSpeaker(obj)
+            if ~isempty(obj.Handles.hSpeakerList.Value)
+                obj.Handles.hSettingFrequency.Enable = 'on';
+                obj.Handles.hSettingAmplitude.Enable = 'on';
+                obj.Handles.hSettingPhase.Enable = 'on';
+                obj.Handles.hSettingDamping.Enable = 'on';
+            end
+        end
+        
+        function setSourceOfSound(obj,~,event)
+            X = event.IntersectionPoint(1);
+            Y = event.IntersectionPoint(2);
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Speakers{speakerNr}.setPosition([X Y]);
+        end
+        
+        function setLineplot(obj)
+        
+        end
+
         end
         
         function addSpeaker(obj)
@@ -226,11 +273,18 @@ classdef WaveGUI < handle
             obj.Handles.hSpeakerList.Enable = 'on';
             obj.Handles.hRemove.Enable = 'on';
             obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
+<<<<<<< HEAD
             obj.Handles.hSpeakerList.Value = length(obj.Speakers);
             obj.selectSpeaker;
             if length(obj.Speakers)==5
                 warndlg('We recommend no more Speakers!','Speaker-overflow');
+=======
+            if length(obj.Speakers)>=5
+                warndlg('We recommend no more Speakers','Speaker-overflow');
+       
+>>>>>>> fa006f01e09cf0188d6048bb83b1cb94bfad4f7a
             end
+            
         end
         
         function removeSpeaker(obj)
@@ -271,6 +325,7 @@ classdef WaveGUI < handle
         
         end
         
+
         function setQuality(obj)
             stop(obj.Timer);
             quality = obj.Handles.hQuality.String(obj.Handles.hQuality.Value);
