@@ -26,9 +26,14 @@ The Simulation consists of two m.files.
 
 ###Software handling
 
-After executing the WaveGUI.m the graphical user interface opens. First the user should check the settings for the quality settings. Users with older mobile devices (>3-4 Years) especially those with dedicated graphic solutions should choose the lower quality settings. Modern devices and most stationary computers can handle the higher quality setting. The quality setting has influence on the refresh time of the animation. With the low quality settings it works at 10Hz and the high setting works with 16.6Hz. The quality settings can be adjusted on-the-fly while the program is running.
+After executing the WaveGUI.m the graphical user interface opens. First the user should check the settings for the quality settings. Users with older mobile devices (>3-4 Years) especially those with dedicated graphic solutions should choose the lower quality settings. Modern devices and most stationary computers can handle the higher quality setting. The quality setting has influence on the refresh time and the resulution of the animation. With the low quality settings it works at 10Hz and the high setting works with 16.6Hz. The quality settings can be adjusted on-the-fly while the program is running.
 
-The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the illustration stays always reasonable and clear. The slider for the phase features values from 0 to 2 Pi. With the button "Start" the simulation can be started. The different sources can be selected with the radiobuttions. These buttons also enable the setting parameters on the left side for every specific source. With the function "Select a Point" the User can select a random point in the wavefield. The program returns a line plot of the specific area.
+The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the illustration stays always reasonable and clear. The slider for the phase features values from 0 to 2 Pi.
+
+To start the simulation sound sources have to be added using the **"Add"** button. It's possible to place as many sources as the user needs or the hardware is able to compute. It's recommended to work with a reasonable amount of sources (up to 6-8) because the impact on performance is relatively high. An warning dialog informs the user if he places five or more sources.
+With the button "Start" the simulation can be started.
+
+ With the function "Select a Point" the User can select a random point in the wavefield. The program returns a line plot of the specific area.
 
 
 ##4. Dependencies
@@ -38,12 +43,12 @@ This program was developed and tested using MathWorks Matlab in the versions:
 
 The program consists of the following essential files:
 * SourceOfSound.m (Class)
-* WaveGUI (Script)
+* WaveGUI (Class)
 
 
 ##5. Installation instructions
 
-This programm requires the installation of MathWorks Matlab **2014b** or **2015a**.
+This program requires the installation of MathWorks Matlab **2014b** or **2015a**.
 
 Installation procedure
 
