@@ -65,7 +65,11 @@ classdef WaveGUI < handle
                                  
             hLineplot = uicontrol('Style','checkbox',...
                                   'String','Select a Point',...
+
                                   'Position',[20 160 150 20],...
+
+                                  'Position',[20 160 100 20],...
+
                                   'FontSize',11,...
                                   'Callback',@(handle,eventdata)obj.setLineplot);
                                  
@@ -214,6 +218,7 @@ classdef WaveGUI < handle
                 sMap = sMap + obj.Speakers{i}.getColorMap(obj.Timer.TasksExecuted);
             end
             set(obj.Handles.hImage,'CData',sMap);
+
         end
         
         function addSpeaker(obj)
@@ -255,7 +260,55 @@ classdef WaveGUI < handle
         function setLineplot(obj)
         
         end
+
+        end
         
+        function addSpeaker(obj)
+            obj.Speakers{length(obj.Speakers)+1} = SourceOfSound();
+            obj.Speakers{length(obj.Speakers)}.setPosition([(rand(1)-0.5)*10*pi (rand(1)-0.5)*10*pi]);
+            obj.Handles.hStart.Enable = 'on';
+            obj.Handles.hSpeakerList.Enable = 'on';
+            obj.Handles.hRemove.Enable = 'on';
+            obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
+            if length(obj.Speakers)>=5
+                warndlg('We recommend no more Speakers','Speaker-overflow');
+            end
+        end
+        
+        function removeSpeaker(obj)
+%             obj.Handles.hSpeakerList.Value = [];
+            curidx = obj.Handles.hSpeakerList.Value;
+            curstrings = obj.Handles.hSpeakerList.String;
+            curstrings(curidx) = [];  %delete it in this list
+            obj.Handles.hSpeakerList.Value = curstrings;
+        end
+        
+        function selectSpeaker(obj)
+        
+        end
+        
+        function setSourceOfSound(obj,~,event)
+            X = event.IntersectionPoint(1);
+            Y = event.IntersectionPoint(2);
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Speakers{speakerNr}.setPosition([X Y]);
+        end
+        
+        function setSettings(obj)
+            if ~isempty(obj.Handles.hSpeakerList.Value)
+                obj.Handles.hSettingFrequency.Enable = 'on';
+                obj.Handles.hSettingAmplitude.Enable = 'on';
+                obj.Handles.hSettingPhase.Enable = 'on';
+                obj.Handles.hSettingDamping.Enable = 'on';
+            end
+            
+        end
+        
+        function setLineplot(obj)
+        
+        end
+        
+
         function setQuality(obj)
             stop(obj.Timer);
             quality = obj.Handles.hQuality.String(obj.Handles.hQuality.Value);
