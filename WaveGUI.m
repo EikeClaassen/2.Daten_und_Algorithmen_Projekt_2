@@ -101,7 +101,7 @@ classdef WaveGUI < handle
                                           'Min',0,'Max',0.4,...
                                           'SliderStep',[0.01 0.1],...
                                           'Value',0.2,...
-                                          'Callback',@(handle,eventdata)obj.changeFrequency(1));
+                                          'Callback',@(handle,eventdata)obj.changeFrequency);
                                     
             hSettingAmplitudeText = uicontrol('Parent',hSetting,...
                                               'Style','Text',...
@@ -115,7 +115,7 @@ classdef WaveGUI < handle
                                           'Min',0,'Max',10,...
                                           'SliderStep',[0.01 0.1],...
                                           'Value',5,...
-                                          'Callback',@(handle,eventdata)obj.changeAmplitude(1));
+                                          'Callback',@(handle,eventdata)obj.changeAmplitude);
                                     
             hSettingPhaseText = uicontrol('Parent',hSetting,...
                                           'Style','Text',...
@@ -129,7 +129,7 @@ classdef WaveGUI < handle
                                       'Min',0,'Max',2*pi,...
                                       'SliderStep',[0.01 0.1],...
                                       'Value',0,...
-                                      'Callback',@(handle,eventdata)obj.changePhase(1));
+                                      'Callback',@(handle,eventdata)obj.changePhase);
                                   
             hSettingDampingText = uicontrol('Parent',hSetting,...
                                             'Style','Text',...
@@ -143,7 +143,7 @@ classdef WaveGUI < handle
                                         'Min',0,'Max',1,...
                                         'SliderStep',[0.01 0.1],...
                                         'Value',0,...
-                                        'Callback',@(handle,eventdata)obj.changeDamping(1));
+                                        'Callback',@(handle,eventdata)obj.changeDamping);
                                    
             hImage = image('Parent',hAnimationAxes,...
                            'Visible','on',...
@@ -246,52 +246,28 @@ classdef WaveGUI < handle
             start(obj.Timer);
         end
         
-        function changeFrequency(obj, nr)
-            switch nr
-                case 1
-                    frequenzy = obj.Handles.hSinus1Frequenz.Value;
-                case 2
-                    frequenzy = obj.Handles.hSinus2Frequenz.Value;
-                case 3
-                    frequenzy = obj.Handles.hSinus3Frequenz.Value;
-            end
-            obj.Speakers{nr}.setFrequency(frequenzy);
+        function changeFrequency(obj)
+            frequency = obj.Handles.hSettingFrequency.Value;
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Speakers{speakerNr}.setFrequency(frequency);
         end
         
-        function changeAmplitude(obj, nr)
-            switch nr
-                case 1
-                    amplitude = obj.Handles.hSinus1Amplitude.Value;
-                case 2
-                    amplitude = obj.Handles.hSinus2Amplitude.Value;
-                case 3
-                    amplitude = obj.Handles.hSinus3Amplitude.Value;
-            end
-            obj.Speakers{nr}.setAmplitude(amplitude);
+        function changeAmplitude(obj)
+            amplitude = obj.Handles.hSettingAmplitude.Value;
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Speakers{speakerNr}.setAmplitude(amplitude);
         end
         
-        function changePhase(obj, nr)
-            switch nr
-                case 1
-                    phase = obj.Handles.hSinus1Phase.Value;
-                case 2
-                    phase = obj.Handles.hSinus2Phase.Value;
-                case 3
-                    phase = obj.Handles.hSinus3Phase.Value;
-            end
-            obj.Speakers{nr}.setPhase(phase);
+        function changePhase(obj)
+            phase = obj.Handles.hSettingPhase.Value;
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Speakers{speakerNr}.setPhase(phase);
         end
         
-        function changeDamping(obj, nr)
-            switch nr
-                case 1
-                    damping = obj.Handles.hSinus1Damping.Value;
-                case 2
-                    damping = obj.Handles.hSinus2Damping.Value;
-                case 3
-                    damping = obj.Handles.hSinus3Damping.Value;
-            end
-            obj.Speakers{nr}.setDamping(damping);
+        function changeDamping(obj)
+            damping = obj.Handles.hSettingDamping.Value;
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Speakers{speakerNr}.setDamping(damping);
         end
 
         function selectSpeakerOrLineplot(obj, data)
