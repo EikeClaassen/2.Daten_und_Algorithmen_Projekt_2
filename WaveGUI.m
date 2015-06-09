@@ -236,6 +236,10 @@ classdef WaveGUI < handle
             obj.Handles.hSpeakerList.Value = curstrings;
         end
         
+        function selectSpeaker(obj)
+        
+        end
+        
         function setSourceOfSound(obj,~,event)
             X = event.IntersectionPoint(1);
             Y = event.IntersectionPoint(2);
@@ -290,15 +294,6 @@ classdef WaveGUI < handle
             damping = obj.Handles.hSettingDamping.Value;
             speakerNr = obj.Handles.hSpeakerList.Value;
             obj.Speakers{speakerNr}.setDamping(damping);
-        end
-
-        function selectSpeakerOrLineplot(obj, data)
-            old = data.OldValue.String;
-            new = data.NewValue.String;
-        end
-        
-        function enable(obj)
-            
         end
         
         function setResolution(obj)
