@@ -31,9 +31,9 @@ After executing the WaveGUI.m the graphical user interface opens. First the user
 The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the illustration stays always reasonable and clear. The slider for the phase features values from 0 to 2 Pi.
 
 To start the simulation sound sources have to be added using the **"Add"** button. It's possible to place as many sources as the user needs or the hardware is able to compute. It's recommended to work with a reasonable amount of sources (up to 6-8) because the impact on performance is relatively high. An warning dialog informs the user if he places five or more sources.
-With the button "Start" the simulation can be started.
+With the button "Start" the simulation can be started. The button "Freeze" pauses the simulation.
 
- With the function "Select a Point" the User can select a random point in the wavefield. The program returns a line plot of the specific area.
+ With the function "Select a Point" the user can select a random point in the wavefield. The program returns a line plot of the specific area.
 
 
 ##4. Dependencies

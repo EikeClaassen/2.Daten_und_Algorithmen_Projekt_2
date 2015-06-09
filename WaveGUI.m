@@ -65,11 +65,8 @@ classdef WaveGUI < handle
                                  
             hLineplot = uicontrol('Style','checkbox',...
                                   'String','Select a Point',...
-
                                   'Position',[20 160 150 20],...
-
                                   'Position',[20 160 100 20],...
-
                                   'FontSize',11,...
                                   'Callback',@(handle,eventdata)obj.setLineplot);
                                  
@@ -272,7 +269,9 @@ classdef WaveGUI < handle
             obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
             if length(obj.Speakers)>=5
                 warndlg('We recommend no more Speakers','Speaker-overflow');
+       
             end
+            
         end
         
         function removeSpeaker(obj)
