@@ -13,6 +13,7 @@ classdef SourceOfSound < handle
         AngularFrequency;
         Phase = 0;
         Damping = 0;
+        Resolution;
     end
     
     
@@ -23,13 +24,14 @@ classdef SourceOfSound < handle
             obj.setAmplitude(5);
             obj.setFrequency(0.2);
             obj.setPhase(0);
-            obj.setDamping(0)
+            obj.setDamping(0);
+            obj.setResolution(pi/28);
         end
         
         
         function setPosition(obj, position)
             obj.Position = position;
-            [X,Y] = meshgrid(-10*pi:pi/28:10*pi);
+            [X,Y] = meshgrid(-10*pi:obj.Resolution:10*pi);
             obj.RadiiMatrix = sqrt((X-obj.Position(1)).^2 + (Y-obj.Position(2)).^2);
             obj.setAmplitude(obj.Amplitude);
         end
@@ -61,8 +63,13 @@ classdef SourceOfSound < handle
             obj.Phase = phase;
         end
         
-        function setDamping(obj,damping)
+        function setDamping(obj, damping)
             obj.Damping = damping;
+        end
+        
+        function setResolution(obj, resolution)
+            obj.Resolution = resolution;
+            obj.setPosition(obj.Position);
         end
         
         function colorMap = getColorMap(obj, t)

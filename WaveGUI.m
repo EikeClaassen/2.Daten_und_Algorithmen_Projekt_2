@@ -7,14 +7,16 @@ classdef WaveGUI < handle
         Timer;
         Resolution;
         Speakers;
+        Picture;
     end
     
     methods
         function obj = WaveGUI
+            obj.Picture = flipud(imread('wir.jpg'));
             obj.Timer = timer('Period',0.06,...
                               'TimerFcn',@(handle,eventdata)obj.runAnimation,...
                               'ExecutionMode','FixedRate');
-            obj.setResolution;
+            obj.setResolution(pi/28);
             obj.openGUI;  
         end
     end
@@ -39,7 +41,7 @@ classdef WaveGUI < handle
  
             hClear = uicontrol('String','Clear',...
                                'Style','Pushbutton',...
-                               'Enable','off',...
+                               'Enable','on',...
                                'Position',[130 70 100 30],...
                                'FontSize',10,...
                                'Callback',@(handle,eventdata)obj.clearAnimation);
@@ -65,7 +67,7 @@ classdef WaveGUI < handle
                                  
             hLineplot = uicontrol('Style','checkbox',...
                                   'String','Select a Point',...
-                                  'Position',[20 160 100 20],...
+                                  'Position',[20 160 150 20],...
                                   'FontSize',11,...
                                   'Callback',@(handle,eventdata)obj.setLineplot);
                                  
@@ -157,7 +159,7 @@ classdef WaveGUI < handle
                            'XData',[-31.4 31.4],...
                            'YData',[-31.4 31.4],...
                            'CDataMapping','scaled',...
-                           'CData',zeros(449),...
+                           'CData',obj.Picture,...
                            'ButtonDownFcn',@obj.setSourceOfSound);
             
             colormap gray;
@@ -185,7 +187,7 @@ classdef WaveGUI < handle
         end
         
         function closeGUI(obj)
-            obj.stopAnimation;
+            obj.clearAnimation;
             delete(obj.Timer);
             closereq;
         end
@@ -203,13 +205,13 @@ classdef WaveGUI < handle
         function clearAnimation(obj)
             stop(obj.Timer);
             obj.Handles.hStart.String = 'Start';
-%             set(obj.Handles.hImage,'CData',zeros(449));
+            set(obj.Handles.hImage,'CData',obj.Picture);
         end
         
         function runAnimation(obj)
             obj.Handles.hImage.Visible = 'on';
-            obj.Handles.hStop.Enable = 'on';
-            sMap = zeros(561);
+            size = length(-10*pi:obj.Resolution:10*pi);
+            sMap = zeros(size);
             for i = 1:length(obj.Speakers)
                 sMap = sMap + obj.Speakers{i}.getColorMap(obj.Timer.TasksExecuted);
             end
@@ -219,12 +221,15 @@ classdef WaveGUI < handle
         function addSpeaker(obj)
             obj.Speakers{length(obj.Speakers)+1} = SourceOfSound();
             obj.Speakers{length(obj.Speakers)}.setPosition([(rand(1)-0.5)*10*pi (rand(1)-0.5)*10*pi]);
+            obj.Speakers{length(obj.Speakers)}.setResolution(obj.Resolution);
             obj.Handles.hStart.Enable = 'on';
             obj.Handles.hSpeakerList.Enable = 'on';
             obj.Handles.hRemove.Enable = 'on';
             obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
-            if length(obj.Speakers)>=5
-                warndlg('We recommend no more Speakers','Speaker-overflow');
+            obj.Handles.hSpeakerList.Value = length(obj.Speakers);
+            obj.selectSpeaker;
+            if length(obj.Speakers)==5
+                warndlg('We recommend no more Speakers!','Speaker-overflow');
             end
         end
         
@@ -234,10 +239,25 @@ classdef WaveGUI < handle
             curstrings = obj.Handles.hSpeakerList.String;
             curstrings(curidx) = [];  %delete it in this list
             obj.Handles.hSpeakerList.Value = curstrings;
+            delete()
         end
         
         function selectSpeaker(obj)
+            obj.setSetting;
+        end
         
+        function setSetting(obj)
+            if ~isempty(obj.Handles.hSpeakerList.Value)
+                currentSpeaker = obj.Speakers{obj.Handles.hSpeakerList.Value};
+                obj.Handles.hSettingFrequency.Value = currentSpeaker.Frequency;
+                obj.Handles.hSettingAmplitude.Value = currentSpeaker.Amplitude;
+                obj.Handles.hSettingPhase.Value = currentSpeaker.Phase;
+                obj.Handles.hSettingDamping.Value = currentSpeaker.Damping;
+                obj.Handles.hSettingFrequency.Enable = 'on';
+                obj.Handles.hSettingAmplitude.Enable = 'on';
+                obj.Handles.hSettingPhase.Enable = 'on';
+                obj.Handles.hSettingDamping.Enable = 'on';
+            end
         end
         
         function setSourceOfSound(obj,~,event)
@@ -245,16 +265,6 @@ classdef WaveGUI < handle
             Y = event.IntersectionPoint(2);
             speakerNr = obj.Handles.hSpeakerList.Value;
             obj.Speakers{speakerNr}.setPosition([X Y]);
-        end
-        
-        function setSettings(obj)
-            if ~isempty(obj.Handles.hSpeakerList.Value)
-                obj.Handles.hSettingFrequency.Enable = 'on';
-                obj.Handles.hSettingAmplitude.Enable = 'on';
-                obj.Handles.hSettingPhase.Enable = 'on';
-                obj.Handles.hSettingDamping.Enable = 'on';
-            end
-            
         end
         
         function setLineplot(obj)
@@ -296,8 +306,11 @@ classdef WaveGUI < handle
             obj.Speakers{speakerNr}.setDamping(damping);
         end
         
-        function setResolution(obj)
-           
+        function setResolution(obj, resolution)
+            obj.Resolution = resolution;
+            for i = 1:length(obj.Speakers)
+                obj.Speakers{i}.setResolution(resolution);
+            end
         end
     end
 end
