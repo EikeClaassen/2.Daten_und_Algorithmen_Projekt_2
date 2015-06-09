@@ -60,7 +60,14 @@ classdef WaveGUI < handle
                                      'Enable','off',...
                                      'String',{},...
                                      'Position',[20 200 210 180],...
-                                     'FontSize',10);
+                                     'FontSize',11,...
+                                     'Callback',@(handle,eventdata)obj.setSettings);
+                                 
+            hLineplot = uicontrol('Style','checkbox',...
+                                  'String','Select a Point',...
+                                  'Position',[20 160 100 20],...
+                                  'FontSize',11,...
+                                  'Callback',@(handle,eventdata)obj.setLineplot);
                                  
             hAdd = uicontrol('Style','Pushbutton',...
                              'String','Add',...
@@ -163,6 +170,7 @@ classdef WaveGUI < handle
                                  'hAdd',hAdd,...
                                  'hRemove',hRemove,...
                                  'hSpeakerList',hSpeakerList,...
+                                 'hLineplot',hLineplot,...
                                  'hAnimationAxes',hAnimationAxes,...
                                  'hSetting',hSetting,...
                                  'hImage',hImage,...
@@ -224,7 +232,11 @@ classdef WaveGUI < handle
         end
         
         function removeSpeaker(obj)
-            
+%             obj.Handles.hSpeakerList.Value = [];
+            curidx = obj.Handles.hSpeakerList.Value;
+            curstrings = obj.Handles.hSpeakerList.String;
+            curstrings(curidx) = [];  %delete it in this list
+            obj.Handles.hSpeakerList.Value = curstrings;
         end
         
         function setSourceOfSound(obj,~,event)
@@ -232,6 +244,16 @@ classdef WaveGUI < handle
             Y = event.IntersectionPoint(2);
             speakerNr = obj.Handles.hSpeakerList.Value;
             obj.Speakers{speakerNr}.setPosition([X Y]);
+        end
+        
+        function setSettings(obj)
+            if ~isempty(obj.Handles.hSpeakerList.Value)
+                obj.Handles.hSettingFrequenz.Enable = 'on';
+                obj.Handles.hSettingAmplitude.Enable = 'on';
+                obj.Handles.hSettingPhase.Enable = 'on';
+                obj.Handles.hSettingDamping.Enable = 'on';
+            end
+            
         end
         
         function setLineplot(obj)
@@ -307,7 +329,7 @@ classdef WaveGUI < handle
         end
         
         function setResolution(obj)
-        
+           
         end
     end
 end
