@@ -61,7 +61,7 @@ classdef WaveGUI < handle
                                      'String',{},...
                                      'Position',[20 200 210 180],...
                                      'FontSize',11,...
-                                     'Callback',@(handle,eventdata)obj.setSettings);
+                                     'Callback',@(handle,eventdata)obj.selectSpeaker);
                                  
             hLineplot = uicontrol('Style','checkbox',...
                                   'String','Select a Point',...
@@ -249,7 +249,7 @@ classdef WaveGUI < handle
         
         function setSettings(obj)
             if ~isempty(obj.Handles.hSpeakerList.Value)
-                obj.Handles.hSettingFrequenz.Enable = 'on';
+                obj.Handles.hSettingFrequency.Enable = 'on';
                 obj.Handles.hSettingAmplitude.Enable = 'on';
                 obj.Handles.hSettingPhase.Enable = 'on';
                 obj.Handles.hSettingDamping.Enable = 'on';
