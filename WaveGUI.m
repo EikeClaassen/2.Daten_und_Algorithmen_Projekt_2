@@ -69,6 +69,7 @@ classdef WaveGUI < handle
                                   'String','Select a Point',...
                                   'Position',[20 160 150 20],...
                                   'FontSize',11,...
+                                  'Value',0,...
                                   'Callback',@(handle,eventdata)obj.setLineplot);
                                  
             hAdd = uicontrol('Style','Pushbutton',...
@@ -229,18 +230,22 @@ classdef WaveGUI < handle
             obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
             obj.Handles.hSpeakerList.Value = length(obj.Speakers);
             obj.selectSpeaker;
-            if length(obj.Speakers)==5
+            if length(obj.Speakers) == 5
                 warndlg('We recommend no more Speakers!','Speaker-overflow');
             end
         end
         
         function removeSpeaker(obj)
-%             obj.Handles.hSpeakerList.Value = [];
-            curidx = obj.Handles.hSpeakerList.Value;
-            curstrings = obj.Handles.hSpeakerList.String;
-            curstrings(curidx) = [];  %delete it in this list
-            obj.Handles.hSpeakerList.Value = curstrings;
-            delete()
+%             obj.Handles.hSpeakerList.Value = ;
+%             obj.Handles.hSpeakerList.String = '';
+                  delete(obj.Speakers{obj.Handles.hSpeakerList.Value});
+                  clear obj.Speakers{obj.Handles.hSpeakerList.Value};
+                  currentSpeaker = obj.Handles.hSpeakerList.String;
+                  currentSpeakerC = char(currentSpeaker);
+                  index = obj.Handles.hSpeakerList.Value;
+                  currentSpeakerC(index,:) = [];
+                  obj.Handles.hSpeakerList.String = cellstr(currentSpeakerC);
+%             delete(obj.Speakers(obj.Handles.hSpeakerList.Value));
         end
         
         function selectSpeaker(obj)
@@ -262,16 +267,23 @@ classdef WaveGUI < handle
         end
         
         function setSourceOfSound(obj,~,event)
+            
             X = event.IntersectionPoint(1);
             Y = event.IntersectionPoint(2);
-            speakerNr = obj.Handles.hSpeakerList.Value;
-            obj.Speakers{speakerNr}.setPosition([X Y]);
+            
+            if ~isempty(obj.Handles.hSpeakerList.Value)
+                return;
+            elseif obj.Handles.hLineplot.Value == 0
+                speakerNr = obj.Handles.hSpeakerList.Value;
+                obj.Speakers{speakerNr}.setPosition([X Y]);
+            elseif obj.Handles.hLineplot.Value == 1
+                obj.setLineplot(X,Y);
+            end
         end
         
-        function setLineplot(obj)
-        
+        function setLineplot(obj,X,Y)
+            
         end
-        
 
         function setQuality(obj)
             stop(obj.Timer);
@@ -281,7 +293,11 @@ classdef WaveGUI < handle
             elseif(strcmp(quality,'Low'))
                 obj.Timer.Period = 0.1;
             end
-            start(obj.Timer);
+            if strcmp(obj.Timer.Running,'off')
+                start(obj.Timer);
+            elseif strcmp(obj.Timer.Running,'on')
+                return;
+            end
         end
         
         function changeFrequency(obj)
