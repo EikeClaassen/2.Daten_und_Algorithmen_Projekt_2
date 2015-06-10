@@ -3,7 +3,7 @@
 ** Table of contents **
 1. Description of the project
 2. Directories
-3. Examples and software handling
+3. User guide and examples
 4. Dependencies
 5. Installation instructions
 6. Authors
@@ -11,7 +11,7 @@
 
 ##1. Description of the project
 
-This program simulates a wave field using MathWorks Matlab. The user can place up to three sources in the field. The sources can emit sine- or cosine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the User is able to stop, continue or cancel the simulation.Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time of the simulation.
+This program simulates a wave field using MathWorks Matlab. The user can place sound sources in the field. The sources emit sine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the User is able to start, continue or cancel the simulation. It is possible to receive a lineplot at every point of the wavefield. Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time and the resolution of the simulation.
 
 
 
@@ -22,7 +22,7 @@ The Simulation consists of two m.files.
 **WaveGUI.m** builds the graphical user interface.
 
 
-##3. Examples and software handling
+##3. User guide and examples
 
 ###Software handling
 
@@ -44,6 +44,7 @@ This program was developed and tested using MathWorks Matlab in the versions:
 The program consists of the following essential files:
 * SourceOfSound.m (Class)
 * WaveGUI (Class)
+* wir.jpg (Picture)
 
 
 ##5. Installation instructions
@@ -57,8 +58,7 @@ Installation procedure
 3. Set the path of the folder in Matlab
 4. Execute the File **WaveGUI.m**
 
-
-
+Informations for the software handling are covered in the chapter **3. ##3. User guide and examples**
 <!--
 
 
@@ -77,7 +77,7 @@ This  program was developed by:
 
 
 
-##7. Lizenzhinweise
+##7. Licence agreement
 
 Copyright (c) 2015 Sascha Bilert, Eike Claaßen, Jan-Michel Grüttgen
 
