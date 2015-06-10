@@ -1,6 +1,7 @@
 #Wavefield Simulation
 
 ** Table of contents **
+
 1. Description of the project
 2. Directories
 3. User guide and examples
@@ -58,13 +59,11 @@ Installation procedure
 3. Set the path of the folder in Matlab
 4. Execute the File **WaveGUI.m**
 
-Informations for the software handling are covered in the chapter **3. ##3. User guide and examples**
+Informations for the usage of the software are covered in the chapter **3. ##3. User guide and examples**
+
+Every class contains a help text. All handles in the GUI have a tool-tip window.
 <!--
 
-
-Informationen zum Umgang mit dem Programm finden sich im Kapitel **3. Benutzungsbeispiele**
-
-Jede Klasse verfügt über einen Hilfe-Text. Handles im GUI besitzen Tool-Tipp Fenster.
 -->
 
 ##6. Authors
