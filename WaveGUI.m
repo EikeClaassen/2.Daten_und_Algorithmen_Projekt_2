@@ -228,7 +228,6 @@ classdef WaveGUI < handle
             obj.Handles.hSpeakerList.String = {};
             obj.Handles.hSpeakerList.Value = 1;
             obj.Handles.hStart.Enable = 'off';
-            %obj.Handles.hSpeakerList.Enable = 'on';
             obj.Handles.hRemove.Enable = 'off';
             obj.Handles.hClear.Enable='off';
            
@@ -272,6 +271,12 @@ classdef WaveGUI < handle
                 obj.Handles.hSpeakerList.String(index) = [];
                 obj.Handles.hSpeakerList.Value = 1;
                 start(obj.Timer);
+                if isempty(obj.Handles.hSpeakerList.String)==1;
+                    obj.Handles.hStart.Enable = 'off';
+                    obj.Handles.hRemove.Enable = 'off';
+                    obj.Handles.hClear.Enable='off'; 
+                end
+                
         end
         
         function selectSpeaker(obj)
