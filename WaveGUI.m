@@ -68,8 +68,8 @@ classdef WaveGUI < handle
                                      'String',{},...
                                      'Position',[20 200 210 180],...
                                      'FontSize',11,...
-                                    'Tooltip','List of all sources',...
-                                    'Callback',@(handle,eventdata)obj.selectSpeaker);
+                                     'Tooltip','List of all sources',...
+                                     'Callback',@(handle,eventdata)obj.selectSpeaker);
                                  
             hLineplot = uicontrol('Style','checkbox',...
                                   'String','Select a Point',...
@@ -83,7 +83,7 @@ classdef WaveGUI < handle
                              'String','Add',...
                              'Position',[20 115 100 30],...
                              'FontSize',10,...
-                             'Tooltip','Adds a sound-souce to the field',...
+                             'Tooltip','Adds a sound-source to the field',...
                              'Callback',@(handle,eventdata)obj.addSpeaker);
             
             hRemove = uicontrol('Style','Pushbutton',...
@@ -244,7 +244,7 @@ classdef WaveGUI < handle
             obj.Handles.hStart.Enable = 'on';
             obj.Handles.hSpeakerList.Enable = 'on';
             obj.Handles.hRemove.Enable = 'on';
-            obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; strcat('Speaker',num2str(length(obj.Speakers)))];
+            obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; cellstr(strcat('Speaker',num2str(length(obj.Speakers))))];
             obj.Handles.hSpeakerList.Value = length(obj.Speakers);
             obj.selectSpeaker;
             if length(obj.Speakers) == 5
@@ -253,16 +253,24 @@ classdef WaveGUI < handle
         end
         
         function removeSpeaker(obj)
-            delete(obj.Speakers{obj.Handles.hSpeakerList.Value});
-            clear obj.Speakers{obj.Handles.hSpeakerList.Value};
-            currentSpeaker = obj.Handles.hSpeakerList.String;
-            currentSpeakerC = char(currentSpeaker);
-            index = obj.Handles.hSpeakerList.Value;
-            currentSpeakerC(index,:) = [];
-            obj.Handles.hSpeakerList.String = cellstr(currentSpeakerC);
+                stop(obj.Timer);
+                speakerNr = obj.Handles.hSpeakerList.Value;
+                delete (obj.Speakers{speakerNr});
+                obj.Speakers(1:speakerNr-1)
+                obj.Speakers = [obj.Speakers(1:speakerNr-1) obj.Speakers(speakerNr+1:end)];
+                index = obj.Handles.hSpeakerList.Value;
+                obj.Handles.hSpeakerList.String(index) = [];
+                obj.Handles.hSpeakerList.Value = 1;
+                start(obj.Timer);
         end
         
         function selectSpeaker(obj)
+                index = obj.Handles.hSpeakerList.Value;
+                if strcmp(obj.Handles.hSpeakerList.String(index),'deleted')
+                    obj.Handles.hRemove.Enable = 'off';
+                else
+                    obj.Handles.hRemove.Enable = 'on';
+                end
             obj.setSetting;
         end
         
