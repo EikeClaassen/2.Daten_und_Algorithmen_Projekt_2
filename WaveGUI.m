@@ -219,12 +219,16 @@ classdef WaveGUI < handle
                 obj.Handles.hStart.String = 'Start';
             end
         end
-        
+  
         function clearAnimation(obj)
             stop(obj.Timer);
             obj.Handles.hStart.String = 'Start';
             set(obj.Handles.hImage,'CData',obj.Picture);
-        end
+            obj.Speakers={};
+              obj.Handles.hSpeakerList.String = {};
+                obj.Handles.hSpeakerList.Value = 1;
+         
+            end
         
         function runAnimation(obj)
             obj.Handles.hImage.Visible = 'on';
