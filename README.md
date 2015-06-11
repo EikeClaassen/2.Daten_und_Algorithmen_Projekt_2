@@ -1,6 +1,6 @@
 #Wavefield Simulation
 
-** Table of contents **
+**Table of contents**
 
 1. Description of the project
 2. Directories
