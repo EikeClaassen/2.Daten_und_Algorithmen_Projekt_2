@@ -42,7 +42,7 @@ classdef WaveGUI < handle
  
             hClear = uicontrol('String','Clear',...
                                'Style','Pushbutton',...
-                               'Enable','on',...
+                               'Enable','off',...
                                'Position',[130 70 100 30],...
                                'FontSize',10,...
                                'Tooltip','Deletes all sources',...
@@ -225,8 +225,13 @@ classdef WaveGUI < handle
             obj.Handles.hStart.String = 'Start';
             set(obj.Handles.hImage,'CData',obj.Picture);
             obj.Speakers={};
-              obj.Handles.hSpeakerList.String = {};
-                obj.Handles.hSpeakerList.Value = 1;
+            obj.Handles.hSpeakerList.String = {};
+            obj.Handles.hSpeakerList.Value = 1;
+            obj.Handles.hStart.Enable = 'off';
+            %obj.Handles.hSpeakerList.Enable = 'on';
+            obj.Handles.hRemove.Enable = 'off';
+            obj.Handles.hClear.Enable='off';
+           
          
             end
         
@@ -248,6 +253,7 @@ classdef WaveGUI < handle
             obj.Handles.hStart.Enable = 'on';
             obj.Handles.hSpeakerList.Enable = 'on';
             obj.Handles.hRemove.Enable = 'on';
+            obj.Handles.hClear.Enable='on';
             obj.Handles.hSpeakerList.String = [obj.Handles.hSpeakerList.String; cellstr(strcat('Speaker',num2str(length(obj.Speakers))))];
             obj.Handles.hSpeakerList.Value = length(obj.Speakers);
             obj.selectSpeaker;
