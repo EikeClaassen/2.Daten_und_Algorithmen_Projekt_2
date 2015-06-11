@@ -253,16 +253,13 @@ classdef WaveGUI < handle
         end
         
         function removeSpeaker(obj)
-%             obj.Handles.hSpeakerList.Value = ;
-%             obj.Handles.hSpeakerList.String = '';
-                  delete(obj.Speakers{obj.Handles.hSpeakerList.Value});
-                  clear obj.Speakers{obj.Handles.hSpeakerList.Value};
-                  currentSpeaker = obj.Handles.hSpeakerList.String;
-                  currentSpeakerC = char(currentSpeaker);
-                  index = obj.Handles.hSpeakerList.Value;
-                  currentSpeakerC(index,:) = [];
-                  obj.Handles.hSpeakerList.String = cellstr(currentSpeakerC);
-%             delete(obj.Speakers(obj.Handles.hSpeakerList.Value));
+            delete(obj.Speakers{obj.Handles.hSpeakerList.Value});
+            clear obj.Speakers{obj.Handles.hSpeakerList.Value};
+            currentSpeaker = obj.Handles.hSpeakerList.String;
+            currentSpeakerC = char(currentSpeaker);
+            index = obj.Handles.hSpeakerList.Value;
+            currentSpeakerC(index,:) = [];
+            obj.Handles.hSpeakerList.String = cellstr(currentSpeakerC);
         end
         
         function selectSpeaker(obj)
@@ -288,9 +285,10 @@ classdef WaveGUI < handle
             X = event.IntersectionPoint(1);
             Y = event.IntersectionPoint(2);
             
-            if ~isempty(obj.Handles.hSpeakerList.Value)
+            if isempty(obj.Handles.hSpeakerList.String)
                 return;
-            elseif obj.Handles.hLineplot.Value == 0
+            end
+            if obj.Handles.hLineplot.Value == 0
                 speakerNr = obj.Handles.hSpeakerList.Value;
                 obj.Speakers{speakerNr}.setPosition([X Y]);
             elseif obj.Handles.hLineplot.Value == 1
@@ -303,6 +301,13 @@ classdef WaveGUI < handle
         end
 
         function setQuality(obj)
+            
+            isRunning = 0;
+            
+            if strcmp(obj.Timer.Running,'on')
+                isRunning = 1;
+            end
+            
             stop(obj.Timer);
             quality = obj.Handles.hQuality.String(obj.Handles.hQuality.Value);
             if(strcmp(quality,'High'))
@@ -310,10 +315,9 @@ classdef WaveGUI < handle
             elseif(strcmp(quality,'Low'))
                 obj.Timer.Period = 0.1;
             end
-            if strcmp(obj.Timer.Running,'off')
+            
+            if isRunning == 1
                 start(obj.Timer);
-            elseif strcmp(obj.Timer.Running,'on')
-                return;
             end
         end
         
