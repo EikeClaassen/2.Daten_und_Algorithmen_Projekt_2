@@ -12,31 +12,33 @@
 
 ##1. Description of the project
 
-This program simulates a wave field using MathWorks Matlab. All features are visualized in a graphical user interface (GUI). The user can place sound sources in the field. The sources emit sine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the user is able to start, freeze or cancel the simulation. It is possible to receive a lineplot at every point of the wavefield. Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time and the resolution of the simulation.
+This program simulates a wave field using MathWorks Matlab. All features are visualized in a graphical user interface (GUI). The user can place sound-sources in the field. The sources emit sine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the user is able to start, freeze or cancel the simulation. It is possible to receive a lineplot at every point of the wavefield. Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time and the resolution of the simulation.
 
 
 
 ##2. Directories
 
-The Simulation consists of two m.files and a picture.
+The simulation consists of two m.files and a picture.
 
-* **SourceOfSound.m** features the functions that describe the Sound Sources which were placed in the field.
+* **SourceOfSound.m** features the functions that describe the sound-sources which were placed in the field.
 
 * **WaveGUI.m** builds the graphical user interface.
 
-* **wir.jpg** is used as a wallpaper.
+* **wir.jpg** is the used wallpaper.
 
 
 ##3. User guide
 
-After executing the WaveGUI.m the graphical user interface opens. First the user should check the settings for the quality settings. Users with older mobile devices (>3-4 Years) especially those with dedicated graphic solutions should choose the lower quality settings. Modern devices and most stationary computers can handle the higher quality setting. The quality setting has influence on the refresh time and the resulution of the animation. With the low quality settings it works at 10Hz and the high setting works with 16.6Hz. The quality settings can be adjusted on-the-fly while the program is running.
+After executing the WaveGUI.m the graphical user interface opens. First the user should check the settings for the quality. Users with older mobile devices (>3-4 Years) especially those with dedicated graphic solutions should choose the lower quality setting. Modern devices and most stationary computers can handle the higher quality setting. The quality setting has influence on the refresh time and the resolution of the animation. With the low quality settings it works at 10Hz and the high setting works with 16.6Hz. The settings can be adjusted on-the-fly while the program is running.
 
-The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the illustration stays always reasonable and clear. The slider for the phase features values from 0 to 2 Pi.
+The settings for "Frequency", "Amplitude", "Phase" and "Damping" are realized using slider. With the sliders the boundaries for the parameters can be predefined in a way that the simulation stays always reasonable and clear. The slider for the phase represents values from 0 to 2 Pi.
 
-To start the simulation sound sources have to be added using the **"Add"** button. It's possible to place as many sources as the user needs or the hardware is able to compute. It's recommended to work with a reasonable amount of sources (up to 6-8) because the impact on performance is relatively high. An warning dialog informs the user if he places five or more sources.
+To start the simulation sound-sources have to be added using the **"Add"** button. It's possible to place as many sources as the user needs or the hardware is able to compute. It's recommended to work with a reasonable amount of sources (up to 5-8) because the impact on performance is relatively high. A warning dialog informs the user if he places five or more sources.
 With the button "Start" the simulation can be started. The button "Freeze" pauses the simulation.
 
- With the function "Select a Point" the user can select a random point in the wavefield. The program returns a line plot of the specific area.
+With the function "Select a Point" the user can select a random point in the wavefield. The program returns a line plot of the specific area.
+
+Every class contains a help text. All handles in the GUI have a tool-tip window.
 
 
 ##4. Dependencies
@@ -59,11 +61,11 @@ Installation procedure
 1. Installing Matlab
 2. All necessary Matlab datas (see chapter 4) should be located in one folder.
 3. Set the path of the folder in Matlab
-4. Execute the File **WaveGUI.m**
+4. Execute the file **WaveGUI.m**
 
 Informations for the usage of the software are covered in the chapter **3. ##3. User guide**
 
-Every class contains a help text. All handles in the GUI have a tool-tip window.
+
 <!--
 
 -->
