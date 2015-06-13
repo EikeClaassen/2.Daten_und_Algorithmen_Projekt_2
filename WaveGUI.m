@@ -230,8 +230,14 @@ classdef WaveGUI < handle
             obj.Handles.hStart.Enable = 'off';
             obj.Handles.hRemove.Enable = 'off';
             obj.Handles.hClear.Enable='off';
-           
-         
+            if isempty(obj.Handles.hSpeakerList.String);
+                obj.Handles.hSettingFrequency.Enable = 'off';
+                obj.Handles.hSettingAmplitude.Enable = 'off';
+                obj.Handles.hSettingPhase.Enable = 'off';
+                obj.Handles.hSettingDamping.Enable = 'off';
+                obj.Handles.hStart.String = 'Start';             
+            end
+                    
             end
         
         function runAnimation(obj)
@@ -274,9 +280,14 @@ classdef WaveGUI < handle
                     obj.Handles.hStart.Enable = 'off';
                     obj.Handles.hRemove.Enable = 'off';
                     obj.Handles.hClear.Enable='off';
+                    obj.Handles.hSettingFrequency.Enable = 'off';
+                    obj.Handles.hSettingAmplitude.Enable = 'off';
+                    obj.Handles.hSettingPhase.Enable = 'off';
+                    obj.Handles.hSettingDamping.Enable = 'off';
                     obj.Handles.hStart.String = 'Start';
-                else
-                    start(obj.Timer);
+                    obj.Handles.hStart.String = 'Start';
+                %else
+                    %start(obj.Timer);
                 end
         end
         
