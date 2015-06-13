@@ -224,7 +224,7 @@ classdef WaveGUI < handle
             stop(obj.Timer);
             obj.Handles.hStart.String = 'Start';
             set(obj.Handles.hImage,'CData',obj.Picture);
-            obj.Speakers={};
+            obj.Speakers = {};
             obj.Handles.hSpeakerList.String = {};
             obj.Handles.hSpeakerList.Value = 1;
             obj.Handles.hStart.Enable = 'off';
@@ -242,7 +242,6 @@ classdef WaveGUI < handle
                 sMap = sMap + obj.Speakers{i}.getColorMap(obj.Timer.TasksExecuted);
             end
             set(obj.Handles.hImage,'CData',sMap);
-
         end
   
         function addSpeaker(obj)
@@ -270,22 +269,18 @@ classdef WaveGUI < handle
                 index = obj.Handles.hSpeakerList.Value;
                 obj.Handles.hSpeakerList.String(index) = [];
                 obj.Handles.hSpeakerList.Value = 1;
-                start(obj.Timer);
-                if isempty(obj.Handles.hSpeakerList.String)==1;
+                if isempty(obj.Handles.hSpeakerList.String);
+                    obj.Handles.hImage.CData = obj.Picture;
                     obj.Handles.hStart.Enable = 'off';
                     obj.Handles.hRemove.Enable = 'off';
-                    obj.Handles.hClear.Enable='off'; 
+                    obj.Handles.hClear.Enable='off';
+                    obj.Handles.hStart.String = 'Start';
+                else
+                    start(obj.Timer);
                 end
-                
         end
         
         function selectSpeaker(obj)
-                index = obj.Handles.hSpeakerList.Value;
-                if strcmp(obj.Handles.hSpeakerList.String(index),'deleted')
-                    obj.Handles.hRemove.Enable = 'off';
-                else
-                    obj.Handles.hRemove.Enable = 'on';
-                end
             obj.setSetting;
         end
         
