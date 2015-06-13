@@ -63,7 +63,7 @@ Installation procedure
 3. Set the path of the folder in Matlab
 4. Execute the file **WaveGUI.m**
 
-Informations for the usage of the software are covered in the chapter **3. ##3. User guide**
+Informations for the usage of the software are covered in the chapter **3. ##3. User guide**.
 
 
 <!--
