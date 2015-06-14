@@ -178,7 +178,7 @@ classdef WaveGUI < handle
                            'YData',[-31.4 31.4],...
                            'CDataMapping','scaled',...
                            'CData',obj.Picture,...
-                           'ButtonDownFcn',@obj.setSourceOfSound);
+                           'ButtonDownFcn',@obj.setPoint);
             
             colormap gray;
                         
@@ -222,23 +222,19 @@ classdef WaveGUI < handle
   
         function clearAnimation(obj)
             stop(obj.Timer);
-            obj.Handles.hStart.String = 'Start';
-            set(obj.Handles.hImage,'CData',obj.Picture);
-            obj.Speakers = {};
-            obj.Handles.hSpeakerList.String = {};
             obj.Handles.hSpeakerList.Value = 1;
+            obj.Handles.hSpeakerList.String = {};
+            obj.Speakers = {};
+            set(obj.Handles.hImage,'CData',obj.Picture);
+            obj.Handles.hStart.String = 'Start';
             obj.Handles.hStart.Enable = 'off';
             obj.Handles.hRemove.Enable = 'off';
             obj.Handles.hClear.Enable='off';
-            if isempty(obj.Handles.hSpeakerList.String);
-                obj.Handles.hSettingFrequency.Enable = 'off';
-                obj.Handles.hSettingAmplitude.Enable = 'off';
-                obj.Handles.hSettingPhase.Enable = 'off';
-                obj.Handles.hSettingDamping.Enable = 'off';
-                obj.Handles.hStart.String = 'Start';             
-            end
-                    
-            end
+            obj.Handles.hSettingFrequency.Enable = 'off';
+            obj.Handles.hSettingAmplitude.Enable = 'off';
+            obj.Handles.hSettingPhase.Enable = 'off';
+            obj.Handles.hSettingDamping.Enable = 'off';                
+        end
         
         function runAnimation(obj)
             obj.Handles.hImage.Visible = 'on';
@@ -267,31 +263,17 @@ classdef WaveGUI < handle
         end
         
         function removeSpeaker(obj)
-                stop(obj.Timer);
-                speakerNr = obj.Handles.hSpeakerList.Value;
-                delete (obj.Speakers{speakerNr});
-                obj.Speakers(1:speakerNr-1)
-                obj.Speakers = [obj.Speakers(1:speakerNr-1) obj.Speakers(speakerNr+1:end)];
-                index = obj.Handles.hSpeakerList.Value;
-                obj.Handles.hSpeakerList.String(index) = [];
-                obj.Handles.hSpeakerList.Value = 1;
-                if isempty(obj.Handles.hSpeakerList.String);
-                    obj.Handles.hImage.CData = obj.Picture;
-                    obj.Handles.hStart.Enable = 'off';
-                    obj.Handles.hRemove.Enable = 'off';
-                    obj.Handles.hClear.Enable='off';
-                    obj.Handles.hSettingFrequency.Enable = 'off';
-                    obj.Handles.hSettingAmplitude.Enable = 'off';
-                    obj.Handles.hSettingPhase.Enable = 'off';
-                    obj.Handles.hSettingDamping.Enable = 'off';
-                    obj.Handles.hStart.String = 'Start';
-                    obj.Handles.hStart.String = 'Start';
-                %else
-                    %start(obj.Timer);
-                end
+            speakerNr = obj.Handles.hSpeakerList.Value;
+            obj.Handles.hSpeakerList.Value = 1;
+            obj.Speakers = [obj.Speakers(1:speakerNr-1) obj.Speakers(speakerNr+1:end)];
+            obj.Handles.hSpeakerList.String(speakerNr) = [];
+            if isempty(obj.Handles.hSpeakerList.String)
+                obj.clearAnimation;
+            end
         end
         
         function selectSpeaker(obj)
+            
             obj.setSetting;
         end
         
@@ -309,19 +291,21 @@ classdef WaveGUI < handle
             end
         end
         
-        function setSourceOfSound(obj,~,event)
-            
+        function setPoint(obj,~,event)
             X = event.IntersectionPoint(1);
             Y = event.IntersectionPoint(2);
-            
-            if isempty(obj.Handles.hSpeakerList.String)
-                return;
-            end
+            position = [X Y];
             if obj.Handles.hLineplot.Value == 0
+                obj.setSourceOfSound(position);
+            elseif obj.Handles.hLineplot.Value ==1
+            
+            end
+        end
+        
+        function setSourceOfSound(obj,position)
+            if ~isempty(obj.Speakers)
                 speakerNr = obj.Handles.hSpeakerList.Value;
-                obj.Speakers{speakerNr}.setPosition([X Y]);
-            elseif obj.Handles.hLineplot.Value == 1
-                obj.setLineplot(X,Y);
+                obj.Speakers{speakerNr}.setPosition(position);
             end
         end
         
@@ -336,7 +320,6 @@ classdef WaveGUI < handle
             if strcmp(obj.Timer.Running,'on')
                 isRunning = 1;
             end
-            
             stop(obj.Timer);
             quality = obj.Handles.hQuality.String(obj.Handles.hQuality.Value);
             if(strcmp(quality,'High'))
@@ -344,9 +327,15 @@ classdef WaveGUI < handle
             elseif(strcmp(quality,'Low'))
                 obj.Timer.Period = 0.1;
             end
-            
-            if isRunning == 1
+            if isRunning
                 start(obj.Timer);
+            end
+        end
+        
+        function setMedium(obj)
+            medium = obj.Handles.hMedium.String{obj.Handles.hMedium.Value};
+            for i = 1:length(obj.Speakers)
+                obj.Speakers{i}.setMedium(medium);
             end
         end
         
