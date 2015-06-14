@@ -73,7 +73,7 @@ classdef SourceOfSound < handle
         end
         
         function colorMap = getColorMap(obj, t)
-            colorMap = exp(-obj.Damping.*obj.RadiiMatrix).*obj.AmplitudesMatrix.*cos(obj.AngularFrequency*t-5*obj.RadiiMatrix+obj.Phase);
+            colorMap = exp(-obj.Damping.*obj.RadiiMatrix).*obj.AmplitudesMatrix.*cos(obj.AngularFrequency*t-obj.WaveVector*1000*obj.RadiiMatrix+obj.Phase);
         end
     end
     
