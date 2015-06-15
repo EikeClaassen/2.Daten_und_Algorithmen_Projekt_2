@@ -5,9 +5,17 @@ classdef WaveGUI < handle
     properties 
         Handles;
         Timer;
-        Resolution;
         Speakers;
         Picture;
+        CurrentPosition;
+        DefaultAmplitude = 5;
+        DefaultFrequency = 0.15;
+        DefaultPhase = 0;
+        DefaultDamping = 0;
+        SpeedOfSound = 343;
+        Resolution = pi/28;
+        Quality;
+        PlotPosition = [1 1];
     end
     
     methods
@@ -51,9 +59,10 @@ classdef WaveGUI < handle
             hMedium = uicontrol('Parent',hfig,...
                                 'Style','Popupmenu',...
                                 'Position',[20 20 100 35],...
-                                'String',{'Air','Water','Steel'},...
+                                'String',{'Air','Helium','Water'},...
                                 'Tooltip','Choose a medium',...
-                                'FontSize',10);
+                                'FontSize',10,...
+                                'Callback',@(handle,eventdata)obj.setMedium);
                             
                             
             hQuality = uicontrol('Style','popupmenu',...
@@ -72,12 +81,11 @@ classdef WaveGUI < handle
                                      'Callback',@(handle,eventdata)obj.selectSpeaker);
                                  
             hLineplot = uicontrol('Style','checkbox',...
-                                  'String','Select a Point',...
-                                  'Position',[20 160 150 20],...
+                                  'String','Select a point for the line plot',...
+                                  'Position',[20 160 200 20],...
                                   'FontSize',11,...
                                   'Value',0,...
-                                  'Tooltip','Select a point for the line plot',...
-                                  'Callback',@(handle,eventdata)obj.setLineplot);
+                                  'Tooltip','Select a point for the line plot');
                                  
             hAdd = uicontrol('Style','Pushbutton',...
                              'String','Add',...
@@ -118,9 +126,9 @@ classdef WaveGUI < handle
                                           'Style','Slider',...
                                           'Position',[15 140 180 20],...
                                           'Enable','off',...
-                                          'Min',0,'Max',0.4,...
+                                          'Min',0,'Max',0.3,...
                                           'SliderStep',[0.01 0.1],...
-                                          'Value',0.2,...
+                                          'Value',0.15,...
                                           'Tooltip','Sets the frequency of the selected source',...
                                           'Callback',@(handle,eventdata)obj.changeFrequency);
                                     
@@ -244,11 +252,21 @@ classdef WaveGUI < handle
                 sMap = sMap + obj.Speakers{i}.getColorMap(obj.Timer.TasksExecuted);
             end
             set(obj.Handles.hImage,'CData',sMap);
+            figure(2);
+            hold on
+            scatter(obj.Timer.TasksExecuted, sMap(obj.PlotPosition(1),obj.PlotPosition(2)));
         end
   
         function addSpeaker(obj)
-            obj.Speakers{length(obj.Speakers)+1} = SourceOfSound();
-            obj.Speakers{length(obj.Speakers)}.setPosition([(rand(1)-0.5)*10*pi (rand(1)-0.5)*10*pi]);
+            position = [(rand(1)-0.5)*10*pi (rand(1)-0.5)*10*pi];
+            amplitude = obj.DefaultAmplitude;
+            frequency = obj.DefaultFrequency;
+            phase = obj.DefaultPhase;
+            damping = obj.DefaultDamping;
+            resolution = obj.Resolution;
+            speedOfSound = obj.SpeedOfSound;
+            obj.Speakers{length(obj.Speakers)+1} = SourceOfSound(position, amplitude, frequency, phase, damping, speedOfSound, resolution);
+            %obj.Speakers{length(obj.Speakers)}.setPosition([(rand(1)-0.5)*10*pi (rand(1)-0.5)*10*pi]);
             obj.Speakers{length(obj.Speakers)}.setResolution(obj.Resolution);
             obj.Handles.hStart.Enable = 'on';
             obj.Handles.hSpeakerList.Enable = 'on';
@@ -294,11 +312,11 @@ classdef WaveGUI < handle
         function setPoint(obj,~,event)
             X = event.IntersectionPoint(1);
             Y = event.IntersectionPoint(2);
-            position = [X Y];
+            obj.CurrentPosition = [X Y];
             if obj.Handles.hLineplot.Value == 0
-                obj.setSourceOfSound(position);
-            elseif obj.Handles.hLineplot.Value ==1
-            
+                obj.setSourceOfSound(obj.CurrentPosition);
+            elseif obj.Handles.hLineplot.Value == 1
+                obj.setLineplot(obj.CurrentPosition);
             end
         end
         
@@ -309,23 +327,27 @@ classdef WaveGUI < handle
             end
         end
         
-        function setLineplot(obj,X,Y)
-            
+        function setLineplot(obj,position)
+            x = ceil((position(1)+31.4)*(1/obj.Resolution));
+            y = ceil((position(2)+31.4)*(1/obj.Resolution));
+            obj.PlotPosition = [x y];
         end
 
         function setQuality(obj)
-            
             isRunning = 0;
-            
             if strcmp(obj.Timer.Running,'on')
                 isRunning = 1;
             end
             stop(obj.Timer);
-            quality = obj.Handles.hQuality.String(obj.Handles.hQuality.Value);
-            if(strcmp(quality,'High'))
-                obj.Timer.Period = 0.06;
-            elseif(strcmp(quality,'Low'))
-                obj.Timer.Period = 0.1;
+            quality = obj.Handles.hQuality.String{obj.Handles.hQuality.Value};
+            obj.Quality = quality;
+            switch quality
+                case 'High'
+                    obj.Timer.Period = 0.06;
+                    obj.setResolution(pi/28);
+                case 'Low'
+                    obj.Timer.Period = 0.06;
+                    obj.setResolution(pi/8);
             end
             if isRunning
                 start(obj.Timer);
@@ -334,8 +356,16 @@ classdef WaveGUI < handle
         
         function setMedium(obj)
             medium = obj.Handles.hMedium.String{obj.Handles.hMedium.Value};
+            switch medium
+                case 'Air'
+                    obj.SpeedOfSound = 343;
+                case 'Water'
+                    obj.SpeedOfSound = 1484;
+                case'Helium'
+                    obj.SpeedOfSound = 981;
+            end            
             for i = 1:length(obj.Speakers)
-                obj.Speakers{i}.setMedium(medium);
+                obj.Speakers{i}.setSpeedOfSound(obj.SpeedOfSound);
             end
         end
         

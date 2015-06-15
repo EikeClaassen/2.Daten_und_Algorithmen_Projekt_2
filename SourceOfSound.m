@@ -3,29 +3,36 @@ classdef SourceOfSound < handle
     %   Detailed explanation goes here
     
     properties
-        Position = [0 0];
+        Position;
         RadiiMatrix;
         SpeedOfSound;
         WaveVector;
-        Amplitude = 1;
+        Amplitude;
         AmplitudesMatrix;
         Frequency;
         AngularFrequency;
-        Phase = 0;
-        Damping = 0;
+        Phase;
+        Damping;
         Resolution;
     end
     
     
     methods
-        function obj = SourceOfSound
-            obj.setPosition([0 0]);
-            obj.setSpeedOfSound('air');
-            obj.setAmplitude(5);
-            obj.setFrequency(0.2);
-            obj.setPhase(0);
-            obj.setDamping(0);
-            obj.setResolution(pi/28);
+        function obj = SourceOfSound(position, amplitude, frequency, phase, damping, speedOfSound, resolution)
+            obj.Position = position;
+            obj.Amplitude = amplitude;
+            obj.Frequency = frequency;
+            obj.Phase = phase;
+            obj.Damping = damping;
+            obj.SpeedOfSound = speedOfSound;
+            obj.Resolution = resolution;
+            obj.setPosition(position);
+            obj.setSpeedOfSound(speedOfSound);
+            obj.setAmplitude(amplitude);
+            obj.setFrequency(frequency);
+            obj.setPhase(phase);
+            obj.setDamping(damping);
+            obj.setResolution(resolution);
         end
         
         
@@ -36,15 +43,8 @@ classdef SourceOfSound < handle
             obj.setAmplitude(obj.Amplitude);
         end
         
-        function setSpeedOfSound(obj, medium)
-            switch medium
-                case 'air'
-                    obj.SpeedOfSound = 343;
-                case 'water'
-                    obj.SpeedOfSound = 1484;
-                case'steel'
-                    obj.SpeedOfSound = 5920;
-            end
+        function setSpeedOfSound(obj, speedOfSound)
+            obj.SpeedOfSound = speedOfSound;
             obj.WaveVector = obj.AngularFrequency/obj.SpeedOfSound;
         end
         
