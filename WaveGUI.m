@@ -252,9 +252,12 @@ classdef WaveGUI < handle
                 sMap = sMap + obj.Speakers{i}.getColorMap(obj.Timer.TasksExecuted);
             end
             set(obj.Handles.hImage,'CData',sMap);
-            figure(2);
-            hold on
-            scatter(obj.Timer.TasksExecuted, sMap(obj.PlotPosition(1),obj.PlotPosition(2)));
+            if obj.Handles.hLineplot.Value == 1
+                figure(2);
+                hold on;
+                grid on;
+                scatter(obj.Timer.TasksExecuted, sMap(obj.PlotPosition(1),obj.PlotPosition(2)));
+            end
         end
   
         function addSpeaker(obj)
