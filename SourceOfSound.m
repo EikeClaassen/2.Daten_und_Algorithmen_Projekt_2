@@ -1,7 +1,17 @@
 classdef SourceOfSound < handle
-    %SOURCEOFWAVE Summary of this class goes here
-    %   Detailed explanation goes here
-    
+%SOURCEOFSOUND caluculates and stores the mathematical part of the project
+%call contains following properties:
+%
+%   - storing the data of a single speaker
+%   - calulates the data matrix
+%   - methods to set variable data
+%
+% @autor Eike Claaßen, Jan-Michel Grüttgen, Sascha Bilert
+% @version 1.0 (June 2015)
+% 
+% Copyright © 2015 Eike Claaßen, Jan-Michel Grüttgen, Sascha Bilert
+% Using the MIT License
+
     properties
         Position;
         RadiiMatrix;
@@ -18,6 +28,7 @@ classdef SourceOfSound < handle
     
     
     methods
+        
         function obj = SourceOfSound(position, amplitude, frequency, phase, damping, speedOfSound, resolution)
             obj.Position = position;
             obj.Amplitude = amplitude;

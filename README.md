@@ -1,5 +1,4 @@
 #Wavefield Simulation
-A programming project for the course "Daten und Algorithmen SS2015", Jade University of Applied Sciences.
 
 **Table of contents**
 
@@ -13,7 +12,7 @@ A programming project for the course "Daten und Algorithmen SS2015", Jade Univer
 
 ##1. Description of the project
 
-This program simulates a wave field using *MathWorks Matlab*. All features are visualized in a graphical user interface (GUI). The user can place sound-sources in the field. The sources emit sine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the user is able to freeze the simulation. Single sources can be removed while the simulation runs. It is possible to receive a lineplot at every point of the wavefield. Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to *"low"* or *"high"*. The setting influences the refresh time and the resolution of the simulation.
+This program simulates a wave field using MathWorks Matlab. All features are visualized in a graphical user interface (GUI). The user can place sound-sources in the field. The sources emit sine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the user is able to freeze the simulation. Single sources can be removed while the simulation runs. It is possible to receive a lineplot at every point of the wavefield. Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to "low" or "high". The setting influences the refresh time and the resolution of the simulation.
 
 
 
@@ -21,11 +20,11 @@ This program simulates a wave field using *MathWorks Matlab*. All features are v
 
 The simulation consists of two m.files and a picture.
 
-* **SourceOfSound.m** features the functions that describe the sound-sources which were placed in the field
+* **SourceOfSound.m** features the functions that describe the sound-sources which were placed in the field.
 
-* **WaveGUI.m** builds the graphical user interface
+* **WaveGUI.m** builds the graphical user interface.
 
-* **wir.jpg** is the used wallpaper
+* **wir.jpg** is the used wallpaper.
 
 
 ##3. User guide
@@ -38,9 +37,7 @@ To start the simulation sound-sources have to be added using the **"Add"** butto
 With the button **"Start"** the simulation can be started. The button **"Freeze"** pauses the simulation.
 If single sources need to be removed the user can select the specific source in the source list and delete it using the **"Remove"** button. The **"Clear"** button removes all sound-sources.
 
-With the function **"Select a point for the line plot"** the user can select a random point in the wavefield. The program returns a line plot of the specific area.
-
-In the popupmenu on the bottom left the medium can be set. The defined media are air *(343m/s)*, helium *(981m/s)* and water *(1484m/s)*.
+With the function **"Select a Point"** the user can select a random point in the wavefield. The program returns a line plot of the specific area.
 
 Every class contains a help text. All handles in the GUI have a tool-tip window.
 
