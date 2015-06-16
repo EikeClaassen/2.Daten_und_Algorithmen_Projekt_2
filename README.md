@@ -38,13 +38,9 @@ To start the simulation sound-sources have to be added using the **"Add"** butto
 With the button **"Start"** the simulation can be started. The button **"Freeze"** pauses the simulation.
 If single sources need to be removed the user can select the specific source in the source list and delete it using the **"Remove"** button. The **"Clear"** button removes all sound-sources.
 
-<<<<<<< HEAD
-With the function **"Select a Point"** the user can select a random point in the wavefield. The program returns a line plot of the specific area.
-=======
 With the function **"Select a point for the line plot"** the user can select a random point in the wavefield. The program returns a line plot of the specific area. It is generated as long as the simulation runs and the tick in the box for the function is set.
 
 In the popupmenu on the bottom left the medium can be set. The defined media are air *(343m/s)*, helium *(981m/s)* and water *(1484m/s)*.
->>>>>>> 28c253abc1d5869581db20eae3f11d305e7fc062
 
 Every class contains a help text. All handles in the GUI have a tool-tip window.
 
