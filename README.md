@@ -11,6 +11,7 @@ A programming project for the course "Daten und Algorithmen SS2015", Jade Univer
 6. Authors
 7. License agreement
 
+
 ##1. Description of the project
 
 This program simulates a wave field using *MathWorks Matlab*. All features are visualized in a graphical user interface (GUI). The user can place sound-sources in the field. The sources emit sine-waves. Properties like the amplitude, the frequency, the phase and the amount of damping can be adjusted. While the simulation is running the user is able to freeze the simulation. Single sources can be removed while the simulation runs. It is possible to receive a lineplot at every point of the wavefield. Also the quality settings can be adjusted. Due to the problem that not every computer has the resources to run this simulation properly the user is able to set the quality to *"low"* or *"high"*. The setting influences the refresh time and the resolution of the simulation.
@@ -38,7 +39,7 @@ To start the simulation sound-sources have to be added using the **"Add"** butto
 With the button **"Start"** the simulation can be started. The button **"Freeze"** pauses the simulation.
 If single sources need to be removed the user can select the specific source in the source list and delete it using the **"Remove"** button. The **"Clear"** button removes all sound-sources.
 
-With the function **"Select a point for the line plot"** the user can select a random point in the wavefield. The program returns a line plot of the specific area.
+With the function **"Select a point for the line plot"** the user can select a random point in the wavefield. The program returns a line plot of the specific area. It is generated as long as the simulation runs and the tick in the box for the function is set.
 
 In the popupmenu on the bottom left the medium can be set. The defined media are air *(343m/s)*, helium *(981m/s)* and water *(1484m/s)*.
 
@@ -70,10 +71,6 @@ This program requires the installation of MathWorks Matlab **2014b** or **2015a*
 
 Instructions for the usage of the software are covered in the chapter **3. User guide**.
 
-
-<!--
-
--->
 
 ##6. Authors
 
